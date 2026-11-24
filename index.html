@@ -1099,6 +1099,25 @@ const TEN=[["أبو بكر الصديق", "ما اسم أبي بكر الصدي�
    const startOf=pg=>{const k=QD.a.findIndex(x=>x[2]===pg);return k>=0?head(k,5):null};const mid=onP.length>1?onP[1+rnd(onP.length-1)]:onP[0],x=QD.a[mid],w=W(x[4]);
    const offs=[[9,14,-12,20,25,-18],[3,4,-3,5,-4,6],[1,-1,2,-2,3]][d-1];const ans=head(onP[0],5);
    o={kind,key:'p'+p,ask:'هذه الآية من وسط صفحة في المصحف، فما أول الصفحة؟',ayah:cut(w,0,14)+(w.length>14?' …':''),ans,ch:distinct(ans,offs.map(z=>startOf(p+z)).filter(Boolean),3),ay:true,refTxt:'بداية صفحة '+AR(p)+': سورة '+SN(QD.a[onP[0]][0])+'، الآية '+AR(QD.a[onP[0]][1]),full:QD.a[onP[0]][4]}}
+  else if(kind==='pend'||kind==='mid'){
+   if(!window._PG){const m={};QD.a.forEach((x,k)=>{(m[x[2]]=m[x[2]]||[]).push(k)});window._PG=m}const ofP=p=>window._PG[p]||[];
+   const pages=[...new Set(R.map(k=>QD.a[k][2]))].filter(p=>ofP(p).length>=(kind==='pend'?3:5)&&QD.a[ofP(p)[0]][3]>=J1&&QD.a[ofP(p)[0]][3]<=J2);
+   if(!pages.length)return gen('surah',d);
+   const p=fresh(pages,p=>kind+p),L=ofP(p),at=X=>kind==='pend'?X[X.length-1]:X[Math.floor((X.length-1)/2)],ak=at(L),ans=head(ak,6);
+   const offs=[[6,-7,9,-10,12,-12],[2,-2,3,-3,4,-4],[1,-1,2,-2,3,-3]][d-1];
+   const ch=distinct(ans,offs.map(z=>{const X=ofP(p+z);return X.length>=(kind==='pend'?3:5)?head(at(X),6):null}).filter(Boolean),3);
+   const y=QD.a[ak],f=QD.a[L[0]];
+   o={kind,key:kind+p,ask:kind==='pend'?'هذه أول آية في صفحة من المصحف، فما آخر آية في الصفحة نفسها؟':'هذه أول آية في صفحة من المصحف، فما الآية التي في وسط الصفحة؟',ayah:head(L[0],16),ans,ch,ay:true,
+    refTxt:'الصفحة '+AR(p)+' تبدأ بسورة '+SN(f[0])+' الآية '+AR(f[1])+'، و'+(kind==='pend'?'آخرها':'وسطها')+' سورة '+SN(y[0])+' الآية '+AR(y[1])+(kind==='mid'?' (الآية '+AR(L.indexOf(ak)+1)+' من '+AR(L.length)+' آيات في الصفحة)':''),full:y[4]}}
+  else if(kind==='slast'){
+   if(!window._SL){const m={};QD.a.forEach((x,k)=>{m[x[0]]=k});window._SL=m}
+   const ss=[...new Set(R.map(k=>QD.a[k][0]))].filter(sn=>{const k=window._SL[sn];return QD.a[k][3]>=J1&&QD.a[k][3]<=J2&&W(QD.a[k][4]).length>=3});
+   if(!ss.length)return gen('surah',d);
+   const sn=fresh(ss,x=>'L'+x),k=window._SL[sn],ans=head(k,6);let pool;
+   if(d===1)pool=Object.values(window._SL).filter(j=>j!==k).map(j=>head(j,6));
+   else if(d===2)pool=[sn-1,sn+1,sn-2,sn+2,sn-3,sn+3].filter(x=>x>=1&&x<=114).map(x=>head(window._SL[x],6));
+   else pool=[k-1,k-2,k-3,k-4].filter(j=>j>=0&&QD.a[j][0]===sn).map(j=>head(j,6)).concat([sn-1,sn+1].filter(x=>x>=1&&x<=114).map(x=>head(window._SL[x],6)));
+   o={kind,key:'L'+sn,ask:'ما آخر آية في سورة '+SN(sn)+'؟',ayah:'',ans,ch:distinct(ans,pool,3),ay:true,refTxt:'آخر سورة '+SN(sn)+': الآية '+AR(QD.a[k][1])+'، في الصفحة '+AR(QD.a[k][2]),full:QD.a[k][4]}}
   else if(kind==='end'){const pool=R.filter(k=>W(QD.a[k][4]).length>=6);const tail=j=>{const v=W(QD.a[j][4]);const n=nrm(cut(v,v.length-2,v.length)).length<9?3:2;return[cut(v,0,v.length-n),cut(v,v.length-n,v.length)]};
    const k=fresh(pool,k=>'e'+k),x=QD.a[k],[hd,ans]=tail(k);const last=nrm(ans).slice(-1);let pool2;
    if(d===1)pool2=pool.slice(0);else if(d===2)pool2=pool.filter(j=>QD.a[j][0]===x[0]);else{pool2=pool.filter(j=>QD.a[j][0]===x[0]&&nrm(tail(j)[1]).slice(-1)===last);if(pool2.length<6)pool2=pool.filter(j=>nrm(tail(j)[1]).slice(-2)===nrm(ans).slice(-2))}
@@ -1196,16 +1215,16 @@ const TEN=[["أبو بكر الصديق", "ما اسم أبي بكر الصدي�
   const x=QD.a[onP[0]];o.refTxt='صفحة '+AR(p)+' تبدأ بسورة '+SN(x[0])+'، الآية '+AR(x[1]);o.d=d;if(o.ch.length<3)return pageQ(p,1);return o}
 
  const ASB=[{"i":0,"j":30,"q":"نزلت سورة «عبس» في شأن أيّ صحابي؟","a":"عبد الله ابن أم مكتوم الأعمى","w":["بلال بن رباح","عمار بن ياسر","زيد بن حارثة"],"ev":"في ابن أم مكتوم الأعمى","loc":"ص 230"},{"i":1,"j":30,"q":"ماذا كان النبي ﷺ يفعل حين جاءه ابن أم مكتوم فنزلت «عبس وتولى»؟","a":"يكلّم رجلًا من عظماء المشركين","w":["يصلي بالناس","يخطب الجمعة","يقرأ القرآن على أصحابه"],"ev":"رجل من عظماء المشركين","loc":"ص 230"},{"i":2,"j":30,"q":"نزل قوله تعالى: ﴿فيم أنت من ذكراها﴾ لأن النبي ﷺ كان يُسأل كثيرًا عن…","a":"الساعة","w":["الروح","أصحاب الكهف","ذي القرنين"],"ev":"يسأل عن الساعة حتى أنزل الله","loc":"ص 228"},{"i":3,"j":30,"q":"نزل قوله تعالى: ﴿ويل للمطففين﴾ لما قدم النبي ﷺ إلى…","a":"المدينة، وكان أهلها من أخبث الناس كيلًا","w":["مكة يوم الفتح","الطائف","خيبر"],"ev":"المدينة كانوا من أخبث الناس كيلا","loc":"ص 232"},{"i":4,"j":30,"q":"ماذا فعل أهل المدينة بعد نزول ﴿ويل للمطففين﴾؟","a":"أحسنوا الكيل","w":["تركوا التجارة","أغلقوا السوق","رحلوا إلى الشام"],"ev":"فأحسنوا الكيل","loc":"ص 232"},{"i":5,"j":30,"q":"ما سبب نزول سورة «الضحى»؟","a":"مرض النبي ﷺ ليلتين أو ثلاثًا، فقالت امرأة: «إن شيطانك قد تركك»","w":["سأله اليهود عن الروح","تأخّر المطر عن مكة","آذاه المشركون في الطائف"],"ev":"إني لأرجو أن يكون شيطانك قد تركك","loc":"ص 233"},{"i":6,"j":30,"q":"نزل قوله تعالى: ﴿أرأيت الذي ينهى ۝ عبدًا إذا صلى﴾ في…","a":"أبي جهل","w":["أبي لهب","الوليد بن المغيرة","أمية بن خلف"],"ev":"يعني أبا جهل","loc":"ص 235"},{"i":7,"j":30,"q":"حين أراد أبو جهل أن يطأ رقبة النبي ﷺ وهو يصلي، ماذا رأى فرجع؟","a":"خندقًا من نار وأجنحة","w":["جملًا هائجًا","رجالًا بالسيوف","سيلًا من الماء"],"ev":"إن بيني وبينه لخندقا من نار","loc":"ص 235"},{"i":8,"j":30,"q":"متى نزلت ﴿تبت يدا أبي لهب وتب﴾؟","a":"لما صعد النبي ﷺ الصفا ينذر قريشًا، فقال أبو لهب: «تبًّا لك»","w":["لما هاجر النبي ﷺ إلى المدينة","يوم بدر","يوم فتح مكة"],"ev":"فقال أبو لهب: تبا لك سائر اليوم ألهذا جمعتنا. فنزلت","loc":"ص 238"},{"i":9,"j":30,"q":"على أيّ جبل صعد النبي ﷺ ينادي بطون قريش لما نزل ﴿وأنذر عشيرتك الأقربين﴾؟","a":"الصفا","w":["المروة","حراء","أبي قبيس"],"ev":"صعد النبي صلى الله عليه وعلى آله وسلم على الصفا","loc":"ص 238"},{"i":10,"j":29,"q":"متى استمع نفرٌ من الجن إلى القرآن فنزلت سورة الجن؟","a":"والنبي ﷺ يصلي بأصحابه صلاة الفجر","w":["وهو يخطب يوم الجمعة","وهو يصلي العشاء بمكة","وهو في غار حراء"],"ev":"وهو يصلي بأصحابه صلاة الفجر","loc":"ص 221"},{"i":11,"j":29,"q":"كم كان بين نزول أول سورة المزمل وآخرها؟","a":"سنة","w":["شهر","ثلاثة أيام","عشر سنين"],"ev":"وكان بين أولها وآخرها سنة","loc":"ص 222"},{"i":12,"j":29,"q":"ماذا قال النبي ﷺ لما أتى خديجة بعد أن رأى الملك، فنزل ﴿يا أيها المدثر﴾؟","a":"«دثّروني»","w":["«اقرئي عليّ»","«أغلقي الباب»","«ادعي لي أبا بكر»"],"ev":"دثروني وصبوا علي ماء باردا","loc":"ص 223"},{"i":13,"j":29,"q":"لماذا نزل قوله تعالى: ﴿لا تحرك به لسانك لتعجل به﴾؟","a":"كان النبي ﷺ يحرّك شفتيه بالقرآن مع جبريل","w":["كان يقرأ في الصلاة بسرعة","كان الصحابة يرفعون أصواتهم","كان المشركون يقاطعونه"],"ev":"وكان مما يحرك شفتيه","loc":"ص 226"},{"i":14,"j":29,"q":"لمن قال النبي ﷺ: ﴿أولى لك فأولى﴾ ثم أنزلها الله؟","a":"أبو جهل","w":["أبو لهب","الوليد بن المغيرة","أبو سفيان"],"ev":"قاله رسول الله صلى الله عليه وعلى آله وسلم لأبي جهل","loc":"ص 227"}];
- const KN={word:'معاني الكلمات',end:'ختام الآية',twin:'المتشابهات',surah:'في أي سورة؟',complete:'أكمل الآية',next:'الآية التالية',asb:'أسباب النزول'};
+ const KN={pend:'نهاية الصفحة',mid:'وسط الصفحة',slast:'آخر آية في السورة',word:'معاني الكلمات',end:'ختام الآية',twin:'المتشابهات',surah:'في أي سورة؟',complete:'أكمل الآية',next:'الآية التالية',asb:'أسباب النزول'};
  function juzQ(j,d){const a=J1,b=J2;J1=J2=j;let o=null;try{
    const asb=ASB.filter(x=>x.j===j&&!seenS.has('b'+x.i));
    if(asb.length&&Math.random()<.3){const x=pick(asb);o={kind:'asb',key:'b'+x.i,ask:x.q,ayah:'',ans:x.a,ch:x.w.slice(0,3),ay:false,d:3,refTxt:'من «الصحيح المسند من أسباب النزول» للشيخ مقبل الوادعي، '+x.loc+': «'+x.ev+'»'}}
    else{const hasW=QD.w.some(z=>{const q=QD.a[z[0]];return q[3]===j&&srcs.includes(z[3])});
-    const K=[['word',hasW?34:0],['end',24],['twin',14],['surah',16],['complete',6],['next',6]],tot=K.reduce((x,y)=>x+y[1],0);
-    let k='end',r=Math.random()*tot;for(const [n,w] of K){if((r-=w)<0){k=n;break}}
-    for(let t=0;t<4&&!o;t++){try{const x=gen(k,Math.max(2,d));if(x&&x.ch&&x.ch.length>=3&&(x.kind===k||k==='twin'))o=x;else k=pick(['end','surah'])}catch(e){k=pick(['end','surah'])}}}
+    const K=[['word',hasW?32:0],['pend',16],['mid',12],['slast',12],['twin',14],['surah',14]],tot=K.reduce((x,y)=>x+y[1],0);
+    let k='pend',r=Math.random()*tot;for(const [n,w] of K){if((r-=w)<0){k=n;break}}
+    for(let t=0;t<4&&!o;t++){try{const x=gen(k,Math.max(2,d));if(x&&x.ch&&x.ch.length>=3&&(x.kind===k||k==='twin'))o=x;else k=pick(['pend','surah'])}catch(e){k=pick(['pend','surah'])}}}
    if(!o)o=gen('surah',2);o.d=o.d||Math.max(2,d);o.kn=KN[o.kind]||'';mark(o.key);return o}finally{J1=a;J2=b}}
- window.QZ={abort,pageQ,juzQ,genD:(k,d)=>{const o=gen(k,d);mark(o.key);return o},only:(ks,title)=>{abort();kinds=ks;drawChips();el.querySelector('h2').textContent=title||'أسئلة قرآنية'},all:()=>{abort();kinds=store.get('qkinds2')||KINDS.map(k=>k[0]).filter(k=>!['ten','umm'].includes(k));drawChips();el.querySelector('h2').textContent='أسئلة قرآنية'},gen:(k)=>{const o=gen(k);mark(o.key);return o},kinds:()=>kinds,nrm,KINDS};
+ window.QZ={abort,pageQ,juzQ,inRange:(a,b,f)=>{const x=J1,y=J2;J1=a;J2=b;try{return f()}finally{J1=x;J2=y}},genD:(k,d)=>{const o=gen(k,d);mark(o.key);return o},only:(ks,title)=>{abort();kinds=ks;drawChips();el.querySelector('h2').textContent=title||'أسئلة قرآنية'},all:()=>{abort();kinds=store.get('qkinds2')||KINDS.map(k=>k[0]).filter(k=>!['ten','umm'].includes(k));drawChips();el.querySelector('h2').textContent='أسئلة قرآنية'},gen:(k)=>{const o=gen(k);mark(o.key);return o},kinds:()=>kinds,nrm,KINDS};
 })();
 
 $('t-quran').onclick=()=>{location.hash='quran';show('quran');FX.tick();P.quran.scrollIntoView({behavior:'smooth',block:'start'})};
@@ -1531,13 +1550,13 @@ const ARC={get(g){return store.get('arc_'+g)||[]},
  bind(el,g,res,re){el.querySelectorAll('[data-arc]').forEach(b=>b.onclick=()=>{const st=this.take(g,+b.dataset.arc);if(st){FX.tone(660,.12);res(st)}});
   el.querySelectorAll('[data-arcdel]').forEach(b=>b.onclick=()=>{if(confirm('حذف هذه اللعبة المحفوظة نهائيًا؟')){store.set('arc_'+g,this.get(g).filter(x=>x.id!==+b.dataset.arcdel));re()}})}};
 const HOST={el:null,st:null,tm:null,
- Q:[['complete','أكمل الآية'],['next','الآية التالية'],['page','بداية الصفحة'],['end','ختام الآية'],['twin','المتشابهات'],['surah','في أي سورة؟'],['juz','في أي جزء؟'],['word','معاني المفردات'],['adwa','القرآن بالقرآن']],
+ Q:[['pend','نهاية الصفحة'],['mid','وسط الصفحة'],['slast','آخر آية في السورة'],['next','الآية التالية'],['page','بداية الصفحة'],['twin','المتشابهات'],['surah','في أي سورة؟'],['juz','في أي جزء؟'],['word','معاني المفردات'],['adwa','القرآن بالقرآن']],
  C:[['sah','السيرة وأعلام الصحابة'],['nat','الطبيعة والعلوم'],['proph','الأنبياء'],['ten','العشرة المبشرون'],['umm','أمهات المؤمنين'],['name','أسماء الله الحسنى']],
  M:[['turn','بالتناوب'],['fast','من يرفع يده أولًا'],['all','الكل يجيب']],
  init(){this.el=mkSec('host');const s=store.get('host_st');if(s&&s.active)this.st=s},
  park(){const st=this.st;if(!st)return;ARC.put('host',st,'مسابقة الحلقة · السؤال '+AR(st.i)+' من '+AR(st.N),this.gs(),st.pts);this.st=null;store.set('host_st',null);FX.tick();this.render()},
  resume(s){this.st=s;s.t0=Date.now();this.render()},gs(){return COMP.gs()},
- cfg(){return Object.assign({mode:'turn',kinds:['complete','end','twin','surah','proph','ten'],d:0,j1:1,j2:30,N:10,sec:30},store.get('hostcfg')||{})},
+ cfg(){return Object.assign({mode:'turn',kinds:['pend','mid','slast','twin','surah','proph','ten'],d:0,j1:1,j2:30,N:10,sec:30},store.get('hostcfg')||{},(()=>{const c=store.get('hostcfg');return c&&c.kinds?{kinds:[...new Set(c.kinds.map(k=>k==='complete'?'pend':k==='end'?'slast':k))]}:{}})())},
  render(){const el=this.el,st=this.st;clearInterval(this.tm);store.set('host_st',st&&st.active?st:null);
   if(!st||!st.active){const c=this.cfg(),sv=()=>store.set('hostcfg',c),ch=(arr,on,cls)=>arr.map(([k,n])=>'<button class="chip'+(on(k)?' ok':'')+'" data-'+cls+'="'+k+'">'+n+'</button>').join('');const o=(n,a,b)=>[...Array(b-a+1)].map((_,i)=>'<option'+(i+a===n?' selected':'')+' value="'+(i+a)+'">'+AR(i+a)+'</option>').join('');
    el.innerHTML='<h2>مسابقة الحلقة</h2>'+ARC.html('host')+'<p class="how">يقرأ المشرف السؤال، وتجيب المجموعة بصوتها، ثم يضغط المشرف الإجابة التي قالتها. لا يلمس الطلاب الجهاز.</p>'+
@@ -1576,7 +1595,7 @@ const HOST={el:null,st:null,tm:null,
   if($('h-nx'))$('h-nx').onclick=()=>st.i>=st.N?this.finish():this.next();
   $('h-save').onclick=()=>this.park();$('h-drop').onclick=()=>{if(confirm('إنهاء اللعبة دون حفظ؟ لن تُحفظ نقاطها ولا مراحلها.')){this.st=null;store.set('host_st',null);FX.tick();this.render()}};$('h-skip').onclick=()=>{st.i--;this.next()};$('h-end').onclick=()=>{if(confirm('إنهاء المسابقة وإعلان النتيجة؟'))this.finish()};
   if(st.phase==='ask'&&st.sec){const end=st.t0+st.sec*1000;const upd=()=>{const r=Math.max(0,Math.ceil((end-Date.now())/1000));if($('h-sec'))$('h-sec').textContent=r?AR(r)+' ث':'انتهى الوقت';if(r<=5&&r>0)FX.tick();if(!r)clearInterval(this.tm)};upd();this.tm=setInterval(upd,500)}},
- next(){const st=this.st,gs=this.gs(),k=pick(st.kinds);const q=k==='sah'?SAH.gen(st.d):k==='nat'?NAT.gen(st.d):(st.d?QZ.genD(k,st.d):QZ.gen(k));q.opts=shuffle([q.ans,...q.ch]);q.kn=(this.Q.concat(this.C).find(x=>x[0]===k)||[,''])[1];
+ next(){const st=this.st,gs=this.gs(),k=pick(st.kinds);const q=k==='sah'?SAH.gen(st.d):k==='nat'?NAT.gen(st.d):QZ.inRange(st.j1||1,st.j2||30,()=>st.d?QZ.genD(k,st.d):QZ.gen(k));q.opts=shuffle([q.ans,...q.ch]);q.kn=(this.Q.concat(this.C).find(x=>x[0]===k)||[,''])[1];
   Object.assign(st,{q,i:st.i+1,phase:'ask',tried:[],gone:[],picked:null,note:'',t0:Date.now(),cur:st.mode==='turn'?(st.i)%gs.length:null});st.who=st.cur!==null?ROS.take(st.cur):null;FX.tone(660,.1);this.render();P.host.scrollIntoView({behavior:'smooth',block:'start'})},
  pick(i,b){const st=this.st,gs=this.gs(),q=st.q;if(st.phase!=='ask'||st.cur===null)return;const good=q.opts[i]===q.ans;
   if(good){const v=st.tried.length&&st.mode==='turn'?5:10;st.pts[st.cur]+=v;const wn=ROS.name(st.who);ROS.add(st.who,v);st.note=(wn?wn+' من ':'')+gs[st.cur]+' أصاب (+'+AR(v)+'). ';st.phase='done';FX.ok(b);this.render();return}
@@ -1705,7 +1724,7 @@ T10.init();
 // ===== من سيربح ١٠٠ / ٢٠٠: سلّم من عشرة أسئلة متنوعة، ووسائل مساعدة، ونقطة أمان
 const MIL={el:null,st:null,tm:null,
  LAD:{100:[5,10,15,20,25,35,45,60,80,100],200:[10,20,30,40,60,80,100,130,160,200]},SAFE:[4,7],
- REL:['complete','end','surah','juz','proph','ten','umm','name','sah','sah'],
+ REL:['pend','mid','slast','surah','juz','proph','ten','umm','name','sah','sah'],
  GKQ:{'w-area':'أيّ هذه الدول أكبر مساحة؟','w-pop':'أيّ هذه الدول أكثر سكانًا؟','w-river':'أيّ هذه الأنهار أطول؟','w-ocean':'أيّ هذه المحيطات أكبر؟',
   'k-ppop':'أيّ هذه المناطق أكثر سكانًا في المملكة؟','k-city':'أيّ هذه المدن أكثر سكانًا في المملكة؟','q-long':'أيّ هذه السور أكثر آيات؟',
   'q-muq':'أيّ هذه السور تبدأ بالحروف المقطّعة؟','q-hamd':'أيّ هذه السور تبدأ بـ«الحمد لله»؟','q-sab':'أيّ هذه السور تبدأ بالتسبيح؟','q-ya':'أيّ هذه السور تبدأ بـ«يا أيها»؟','q-psur':'أيّ هذه السور سُمّيت باسم نبي؟',
