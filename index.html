@@ -754,6 +754,11 @@ main,#panels,.card,header{position:relative;z-index:1}
 #splash .sp-k,[data-skin="marah"] #splash .sp-k{color:#E3B341!important}
 #splash .sp-t,[data-skin="marah"] #splash .sp-t{color:#F0EEE9!important;text-shadow:0 3px 0 rgba(227,179,65,.55)!important}
 #splash .sp-s,[data-skin="marah"] #splash .sp-s{color:rgba(240,238,233,.75)!important}
+
+/* توهّج النجمة: تتوهّج ثم تخفت */
+@keyframes starGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,214,102,0)) drop-shadow(0 0 0 rgba(227,179,65,0)) brightness(1)}50%{filter:drop-shadow(0 0 7px rgba(255,214,102,.95)) drop-shadow(0 0 16px rgba(227,179,65,.75)) brightness(1.35)}}
+#splash .lstar{animation:starPop .6s 1.05s cubic-bezier(.2,.9,.3,1.5) forwards,starGlow 1.8s 1.6s ease-in-out infinite!important}.brand .lstar{animation:starGlow 1.8s ease-in-out infinite!important}
+@media (prefers-reduced-motion:reduce){#splash .lstar,.brand .lstar{animation:none!important}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
