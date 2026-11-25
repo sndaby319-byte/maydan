@@ -971,6 +971,36 @@ body.disp .mg-start{display:none}
 body.disp .mg-wnote{font-family:var(--display);font-size:28px;color:var(--ink)}
 body.disp .mg-wnote::after{content:'';display:block}
 .mg-wnote .stu{display:none}body.disp .mg-wnote .sup{display:none}body.disp .mg-wnote .stu{display:inline}
+
+/* ===== بطاقة المجموعة: تغطي الشاشة */
+.mg-card.tc{padding:0;background:rgba(10,12,24,.9);backdrop-filter:blur(6px)}
+.mg-card.tc .mg-card-in{width:100vw;height:100vh;height:100dvh;max-width:none;border-radius:0;border:0;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:24px;animation:tcIn .45s cubic-bezier(.2,.9,.3,1.2)}
+.mg-card.tc-c5 .mg-card-in{background:radial-gradient(90% 70% at 50% 40%,#7A5512 0%,#2A1E0A 60%,#120D05 100%)}
+.mg-card.tc-c10 .mg-card-in{background:radial-gradient(90% 70% at 50% 40%,#5B2E8F 0%,#24123D 60%,#100820 100%)}
+.mg-card.tc-stop .mg-card-in{background:radial-gradient(90% 70% at 50% 40%,#8E1F1F 0%,#3A0D0D 60%,#1A0606 100%)}
+.mg-card.tc-rev .mg-card-in{background:radial-gradient(90% 70% at 50% 40%,#1F5E96 0%,#0E2A45 60%,#07141F 100%)}
+@keyframes tcIn{0%{opacity:0;transform:scale(1.08)}100%{opacity:1;transform:none}}
+.mg-card.tc small{font-size:clamp(16px,2.4vw,26px);color:#FFE38A}
+.mg-card.tc b{font-size:clamp(44px,8vw,110px);margin:0;line-height:1.1;animation:tcNum .5s .6s cubic-bezier(.3,1.6,.5,1) both}
+.mg-card.tc p{font-size:clamp(18px,2.6vw,32px);max-width:900px;margin:0}
+.tc-ic{position:relative;width:min(42vh,62vw);height:min(42vh,62vw);margin:4px 0}
+.tc-ic svg{width:100%;height:100%;overflow:visible}
+.tc-ic.sw i{position:absolute;inset:0;display:flex;justify-content:center}
+.tc-ic.sw i svg{width:auto;height:100%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.5))}
+.tc-ic.sw .s1{animation:sw1 .6s cubic-bezier(.3,1.4,.5,1) both}
+.tc-ic.sw .s2{animation:sw2 .6s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes sw1{0%{transform:translateX(-70vw) rotate(-10deg)}80%{transform:translateX(4%) rotate(48deg)}100%{transform:rotate(42deg)}}
+@keyframes sw2{0%{transform:translateX(70vw) rotate(10deg)}80%{transform:translateX(-4%) rotate(-48deg)}100%{transform:rotate(-42deg)}}
+.tc-ic.sw .spark{inset:auto;left:50%;top:34%;width:46%;height:46%;transform:translate(-50%,-50%) scale(0);border-radius:50%;background:radial-gradient(circle,#fff 0%,#FFE38A 25%,rgba(255,180,40,.6) 45%,transparent 70%);animation:spark .9s .5s ease-out both}
+@keyframes spark{0%{transform:translate(-50%,-50%) scale(0);opacity:1}40%{transform:translate(-50%,-50%) scale(1.5);opacity:1}100%{transform:translate(-50%,-50%) scale(2.3);opacity:0}}
+.tc-ic.stp{animation:stp .55s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes stp{0%{transform:translateY(-80vh) rotate(-20deg)}100%{transform:none}}
+.tc-ic.rv svg{animation:rv 1.2s cubic-bezier(.4,0,.2,1) 2 both}
+@keyframes rv{to{transform:rotate(360deg)}}
+.tc-num{font-style:normal;font-family:var(--display);font-size:clamp(60px,11vw,150px);line-height:1;color:#FFE38A;text-shadow:0 0 30px rgba(255,200,60,.55);animation:tcNum .5s .65s cubic-bezier(.3,1.6,.5,1) both;display:flex;align-items:baseline;gap:12px}
+.tc-num span{font-size:.3em;color:#fff}
+@keyframes tcNum{0%{transform:scale(0)}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){.tc-ic *, .tc-ic, .tc-num{animation:none!important}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1584,8 +1614,8 @@ const MAPG={st:null,timer:null,
   if(st.rounds&&rd===st.rounds)c=this.FINAL;else if(rd>1||Math.random()<.5){if(Math.random()<.7)c=pick(this.CARDS.filter(x=>!st.ev||x.id!==st.ev.id))}
   st.hint=null;if(c&&c.id==='map'){const L=this.pages().filter(p=>st.tr[p]===1&&st.owner[p]===undefined);if(L.length)st.hint=pick(L);else c=this.CARDS[0]}
   st.ev=c?{id:c.id,t:c.t,d:c.d}:null;if(c){st.log.unshift('بطاقة المفاجأة: '+c.t);setTimeout(()=>this.showCard(c),this.disp?0:950)}},
- showCard(c){const o=document.createElement('div');o.className='mg-card'+(c.k?' tc':'');o.innerHTML='<div class="mg-card-in"><small>'+(c.k||'بطاقة المفاجأة')+'</small><b>'+c.t+'</b><p>'+c.d+'</p>'+(this.disp?'':'<button>انطلق</button>')+'</div>';document.body.appendChild(o);
-  FX.tone(392,.15);setTimeout(()=>FX.tone(523,.15),140);setTimeout(()=>FX.tone(784,.3),280);const close=()=>{o.classList.add('out');setTimeout(()=>o.remove(),400)};o.onclick=close;setTimeout(close,this.disp?4500:9000)},
+ showCard(c){const TCI={"c": "<div class=\"tc-ic sw\"><i class=\"s1\"><svg viewBox=\"0 0 40 200\"><defs><linearGradient id=\"bl\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"#F4F6FA\"/><stop offset=\".5\" stop-color=\"#B9C2D3\"/><stop offset=\"1\" stop-color=\"#7D879B\"/></linearGradient></defs><polygon points=\"20,0 27,16 27,138 13,138 13,16\" fill=\"url(#bl)\" stroke=\"#5B6478\" stroke-width=\"1.5\"/><line x1=\"20\" y1=\"12\" x2=\"20\" y2=\"134\" stroke=\"#fff\" stroke-opacity=\".7\" stroke-width=\"1.5\"/><rect x=\"1\" y=\"137\" width=\"38\" height=\"9\" rx=\"4\" fill=\"#E3B341\" stroke=\"#9C7420\" stroke-width=\"1.5\"/><rect x=\"15\" y=\"146\" width=\"10\" height=\"36\" rx=\"3\" fill=\"#6B3A1F\"/><circle cx=\"20\" cy=\"189\" r=\"8\" fill=\"#E3B341\" stroke=\"#9C7420\" stroke-width=\"1.5\"/></svg></i><i class=\"s2\"><svg viewBox=\"0 0 40 200\"><defs><linearGradient id=\"bl\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"#F4F6FA\"/><stop offset=\".5\" stop-color=\"#B9C2D3\"/><stop offset=\"1\" stop-color=\"#7D879B\"/></linearGradient></defs><polygon points=\"20,0 27,16 27,138 13,138 13,16\" fill=\"url(#bl)\" stroke=\"#5B6478\" stroke-width=\"1.5\"/><line x1=\"20\" y1=\"12\" x2=\"20\" y2=\"134\" stroke=\"#fff\" stroke-opacity=\".7\" stroke-width=\"1.5\"/><rect x=\"1\" y=\"137\" width=\"38\" height=\"9\" rx=\"4\" fill=\"#E3B341\" stroke=\"#9C7420\" stroke-width=\"1.5\"/><rect x=\"15\" y=\"146\" width=\"10\" height=\"36\" rx=\"3\" fill=\"#6B3A1F\"/><circle cx=\"20\" cy=\"189\" r=\"8\" fill=\"#E3B341\" stroke=\"#9C7420\" stroke-width=\"1.5\"/></svg></i><i class=\"spark\"></i></div>", "stop": "<div class=\"tc-ic stp\"><svg viewBox=\"0 0 200 200\"><polygon points=\"62,8 138,8 192,62 192,138 138,192 62,192 8,138 8,62\" fill=\"#D32F2F\" stroke=\"#fff\" stroke-width=\"10\"/><text x=\"100\" y=\"128\" text-anchor=\"middle\" font-size=\"84\" font-weight=\"900\" fill=\"#fff\" font-family=\"inherit\">قف</text></svg></div>", "rev": "<div class=\"tc-ic rv\"><svg viewBox=\"0 0 200 200\" fill=\"none\" stroke=\"#fff\" stroke-width=\"16\" stroke-linecap=\"round\"><path d=\"M160 80 A64 64 0 0 0 44 72\"/><path d=\"M40 120 A64 64 0 0 0 156 128\"/><polygon points=\"34,40 64,74 24,92\" fill=\"#fff\" stroke=\"none\"/><polygon points=\"166,160 136,126 176,108\" fill=\"#fff\" stroke=\"none\"/></svg></div>"};const ic=c.k?(c.id==='c5'||c.id==='c10'?TCI.c:TCI[c.id]||''):'',num=c.id==='c5'?'٥':c.id==='c10'?'١٠':'';const o=document.createElement('div');o.className='mg-card'+(c.k?' tc tc-'+c.id:'');o.innerHTML='<div class="mg-card-in"><small>'+(c.k||'بطاقة المفاجأة')+'</small>'+ic+'<b>'+c.t+'</b><p>'+c.d+'</p>'+(this.disp||c.k?'':'<button>انطلق</button>')+'</div>';document.body.appendChild(o);if(c.k){setTimeout(()=>{FX.tone(196,.08);FX.tone(1568,.06)},560);setTimeout(()=>FX.tone(880,.2),700)}
+  FX.tone(392,.15);setTimeout(()=>FX.tone(523,.15),140);setTimeout(()=>FX.tone(784,.3),280);const close=()=>{o.classList.add('out');setTimeout(()=>o.remove(),400)};o.onclick=close;setTimeout(close,c.k?(this.disp?5500:4500):(this.disp?4500:9000))},
 
  // ===== بطاقات المجموعات: لكل مجموعة واحدة من كل نوع في اللعبة
  PCS:[{id:'stop',n:'قِف',t:'قِف',tg:1,d:'يضيع على المجموعة المختارة دورها القادم.'},{id:'rev',n:'اعكس',t:'اعكس',tg:0,d:'ينقلب ترتيب الأدوار.'},{id:'c5',n:'تحدٍّ ٥',t:'تحدٍّ ٥',tg:1,v:5,d:'سؤال متوسط للمجموعة المختارة: إن أخطأت خُصم منها ٥، وإن أصابت خُصم ٥ ممن رمى البطاقة.'},{id:'c10',n:'تحدٍّ ١٠',t:'تحدٍّ ١٠',tg:1,v:10,d:'سؤال صعب للمجموعة المختارة: إن أخطأت خُصم منها ١٠، وإن أصابت خُصم ١٠ ممن رمى البطاقة.'}],
