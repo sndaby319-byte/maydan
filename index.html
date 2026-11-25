@@ -775,6 +775,18 @@ input,select,textarea{font-size:16px!important}
 .ded-b{display:flex;gap:6px}.ded-b button{min-width:44px;height:40px;border-radius:12px;border:1.5px solid color-mix(in srgb,var(--bad) 40%,var(--line));background:var(--paper);color:var(--bad);font:inherit;font-family:var(--num);font-weight:800;font-size:16px;cursor:pointer}
 .ded-b button.up{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,var(--line))}
 #mg-ded.on{color:var(--bad)!important;border-color:var(--bad)!important}
+
+.wh-opt{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin:10px 0}.wh-opt label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px}.wh-opt input{width:20px;height:20px;flex:none}
+#wh-in{width:100%;box-sizing:border-box;font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 12px;margin-top:6px}
+.wh-box{position:relative;width:min(100%,460px);margin:14px auto 0;aspect-ratio:1;display:grid;place-items:center}
+.wh-box canvas{display:block;border-radius:50%;box-shadow:0 18px 40px -20px rgba(30,34,64,.55)}
+.wh-ptr{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:18px solid transparent;border-right:18px solid transparent;border-top:34px solid var(--ink);z-index:2;filter:drop-shadow(0 3px 0 rgba(0,0,0,.15))}
+.wh-go{position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;border:5px solid #fff;background:var(--ink);color:#fff;font:inherit;font-family:var(--display);font-size:22px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px -8px rgba(0,0,0,.5);z-index:2}
+.wh-go[disabled]{opacity:.5;cursor:default}
+.wh-res{text-align:center;margin:14px 0 4px;min-height:70px}.wh-res small{display:block;color:var(--muted);font-weight:700}.wh-res b{display:block;font-family:var(--display);font-size:clamp(30px,8vw,46px);color:var(--ink);animation:bounceIn .5s}
+
+.wh-teams{display:flex;flex-wrap:wrap;gap:8px}.wh-t{padding:9px 14px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--c) 35%,var(--line));background:var(--paper);color:var(--ink);font:inherit;font-weight:800;cursor:pointer}
+.wh-t.on{background:var(--c);border-color:var(--c);color:#fff}.wh-t small{font-family:var(--num);opacity:.8;font-weight:700}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -791,7 +803,7 @@ input,select,textarea{font-size:16px!important}
     <div class="plan" id="planbox" hidden><h3>تمرين اليوم <span id="p-cnt"></span></h3><div class="chips" id="p-chips"></div></div>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
-  <div id="home"><div class="tools"><button type="button" data-tool="roster" class="ros-t">المتسابقون</button><button type="button" data-tool="skin">الألوان</button><button type="button" data-tool="honor">لوحة الشرف</button><button type="button" data-tool="board">لوحة النقاط</button><button type="button" data-tool="settings">إعدادات الأسئلة</button><button type="button" data-tool="learn">تعلّم قبل أن تُسأل</button><button type="button" data-tool="backup">النسخة الاحتياطية</button><button type="button" id="dlOff" class="dl" hidden>تحميل نسخة تعمل دون إنترنت</button></div><div class="tiles"><button class="tile wide gold hero" data-go="host" style="--i:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v4M8 20h8"/></svg><b>مسابقة الحلقة</b><small>المشرف يسأل، والمجموعات تجيب: قرآن، وأنبياء، وعشرة مبشرون، وأمهات المؤمنين، وأسماء الله الحسنى</small></button></div><div class="hsec">ألعاب يديرها المشرف</div><div class="tiles"><button class="tile wide mil-t" data-go="mil" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20h12M8 20v-4M16 20v-4M12 20V8"/><path d="M8 16h8l-1-4H9z"/><circle cx="12" cy="5" r="2"/></svg><b>من سيربح ١٠٠؟</b><small>من متسابق إلى أربعة، سلّم من عشرة أسئلة، ووسائل المساعدة: ٥٠:٥٠، والاستعانة بصديق، ورأي الحلقة</small></button><button class="tile wide t10" data-go="ten10" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h2M8 12h2M8 16h2M12 8h4M12 12h4M12 16h4"/></svg><b>تحدّي العشرة</b><small>اذكر ١٠: أطول السور، العواصم العربية، أكبر الدول، آيات عن الجنة… وتختار العدد من ١ إلى ١٠</small></button><button class="tile wide map" data-go="mapg" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg><b>خريطة المصحف</b><small>عمّر خانات الأجزاء بفريقك: معاني، وختام آيات، ومتشابهات، وأسباب نزول</small></button><button class="tile" data-go="reveal" style="--i:3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h3M8 14h8"/><circle cx="16" cy="10" r="1.5"/></svg><b>اكشف السورة</b><small>تلميحات تتكشف تباعًا</small></button><button class="tile" data-go="ladder" style="--i:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v18M17 3v18M7 7h10M7 12h10M7 17h10"/></svg><b>سُلّم الحفّاظ</b><small>١٥ درجة من السهل إلى الصعب</small></button></div><p class="how" style="text-align:center;margin-top:18px">في كل الألعاب يقرأ المشرف السؤال، ويُدخل إجابة الطالب أو المجموعة. ولا يحتاج الطلاب إلى لمس الجهاز.</p></div>
+  <div id="home"><div class="tools"><button type="button" data-tool="roster" class="ros-t">المتسابقون</button><button type="button" data-tool="wheel" class="ros-t">عجلة الأسماء</button><button type="button" data-tool="skin">الألوان</button><button type="button" data-tool="honor">لوحة الشرف</button><button type="button" data-tool="board">لوحة النقاط</button><button type="button" data-tool="settings">إعدادات الأسئلة</button><button type="button" data-tool="learn">تعلّم قبل أن تُسأل</button><button type="button" data-tool="backup">النسخة الاحتياطية</button><button type="button" id="dlOff" class="dl" hidden>تحميل نسخة تعمل دون إنترنت</button></div><div class="tiles"><button class="tile wide gold hero" data-go="host" style="--i:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v4M8 20h8"/></svg><b>مسابقة الحلقة</b><small>المشرف يسأل، والمجموعات تجيب: قرآن، وأنبياء، وعشرة مبشرون، وأمهات المؤمنين، وأسماء الله الحسنى</small></button></div><div class="hsec">ألعاب يديرها المشرف</div><div class="tiles"><button class="tile wide mil-t" data-go="mil" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20h12M8 20v-4M16 20v-4M12 20V8"/><path d="M8 16h8l-1-4H9z"/><circle cx="12" cy="5" r="2"/></svg><b>من سيربح ١٠٠؟</b><small>من متسابق إلى أربعة، سلّم من عشرة أسئلة، ووسائل المساعدة: ٥٠:٥٠، والاستعانة بصديق، ورأي الحلقة</small></button><button class="tile wide t10" data-go="ten10" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h2M8 12h2M8 16h2M12 8h4M12 12h4M12 16h4"/></svg><b>تحدّي العشرة</b><small>اذكر ١٠: أطول السور، العواصم العربية، أكبر الدول، آيات عن الجنة… وتختار العدد من ١ إلى ١٠</small></button><button class="tile wide map" data-go="mapg" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14h18M9 4v16M15 4v16"/></svg><b>خريطة المصحف</b><small>عمّر خانات الأجزاء بفريقك: معاني، وختام آيات، ومتشابهات، وأسباب نزول</small></button><button class="tile" data-go="reveal" style="--i:3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 10h3M8 14h8"/><circle cx="16" cy="10" r="1.5"/></svg><b>اكشف السورة</b><small>تلميحات تتكشف تباعًا</small></button><button class="tile" data-go="ladder" style="--i:4"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v18M17 3v18M7 7h10M7 12h10M7 17h10"/></svg><b>سُلّم الحفّاظ</b><small>١٥ درجة من السهل إلى الصعب</small></button></div><p class="how" style="text-align:center;margin-top:18px">في كل الألعاب يقرأ المشرف السؤال، ويُدخل إجابة الطالب أو المجموعة. ولا يحتاج الطلاب إلى لمس الجهاز.</p></div>
   <div id="backbar"><button type="button" id="goHome">الرئيسية</button><span id="bb-t"></span><button type="button" id="projBtn" class="pj">وضع العرض</button></div>
   <main id="panels"></main>
   <div class="ov" id="bk" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="bk-h"><h3 id="bk-h">النسخة الاحتياطية</h3><p>كل نقاطك وشاراتك وخريطة المصحف ومسابقاتك محفوظة في هذا المتصفح فقط. احفظ منها نسخة في ملف كل أسبوع، واسترجعها إذا غيّرت الجهاز أو مُسحت بيانات المتصفح.</p>
@@ -893,7 +905,7 @@ const G=[
 const P={};
 G.forEach(g=>{const t=document.createElement('button');t.className='tab';t.role='tab';t.id='t-'+g.id;t.innerHTML=g.name+'<small>'+g.sub+'</small>';t.onclick=()=>{location.hash=g.id;show(g.id);FX.tick()};$('tabs').appendChild(t);
  const s=document.createElement('section');s.className='card';s.id='g-'+g.id;s.hidden=true;$('panels').appendChild(s);P[g.id]=s});
-function show(id){if(!['comp','quran','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil'].includes(id)&&!G.some(g=>g.id===id))id='schulte';G.forEach(g=>{P[g.id].hidden=g.id!==id;$('t-'+g.id).setAttribute('aria-selected',g.id===id)});['comp','quran','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil'].forEach(x=>{if(P[x]){P[x].hidden=id!==x;const t=$('t-'+x);t&&t.setAttribute('aria-selected',id===x)}})}
+function show(id){if(!['comp','quran','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil','wheel'].includes(id)&&!G.some(g=>g.id===id))id='schulte';G.forEach(g=>{P[g.id].hidden=g.id!==id;$('t-'+g.id).setAttribute('aria-selected',g.id===id)});['comp','quran','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil','wheel'].forEach(x=>{if(P[x]){P[x].hidden=id!==x;const t=$('t-'+x);t&&t.setAttribute('aria-selected',id===x)}})}
 function levels(el,opts,cur,on){const d=document.createElement('div');d.className='lv';opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o;b.setAttribute('aria-pressed',i===cur);b.onclick=()=>{if(el.dataset.busy==='1')return;[...d.children].forEach((x,j)=>x.setAttribute('aria-pressed',j===i));if(!d.dataset.sec)el.dataset.lv=i;FX.tick();on(i)};d.appendChild(b)});if(el.querySelector('.lv'))d.dataset.sec='1';return d}
 
 // ===== 1. Schulte: sizes 4–7, forward / reverse / alternating numbers & letters
@@ -1858,6 +1870,52 @@ const MIL={el:null,st:null,tm:null,
   this.render();if(st.P.length>1)setTimeout(()=>COMP.reveal(st.P.map(p=>p.name),st.P.map(p=>p.won),'من سيربح '+AR(st.top)),500)}};
 
 MIL.init();
+// ===== عجلة الأسماء
+const WHEEL={el:null,ang:0,spinning:false,win:null,
+ COL:['#FFB400','#FF6B4A','#22B060','#3D7BFF','#8C5CFF','#E08E00','#D9472A','#168A48','#2357D6','#6A3BE0'],
+ cfg(){const c=Object.assign({src:'stu',custom:'',drop:true,removed:[],teams:null},store.get('wheel')||{});if(/^t\d$/.test(c.src)){c.teams=[+c.src.slice(1)];c.src='stu'}return c},
+ save(c){store.set('wheel',c)},
+ init(){this.el=mkSec('wheel')},
+ open(){location.hash='wheel';show('wheel');this.render();this.el.scrollIntoView({behavior:'smooth',block:'start'})},
+ all(c){const L=ROS.st().list,K=COMP.K();
+  if(c.src==='stu'){const T=c.teams&&c.teams.length?c.teams:[...Array(K).keys()];return L.filter(m=>T.includes(m.g)).map(m=>m.n)}
+  if(c.src==='teams')return COMP.gs().slice();
+  if(c.src==='custom')return c.custom.split(/\n|،|,/).map(x=>x.trim()).filter(Boolean);
+  const k=+c.src.slice(1);return L.filter(m=>m.g===k).map(m=>m.n)},
+ names(c){const A=[...new Set(this.all(c))];return c.drop?A.filter(n=>!c.removed.includes(n)):A},
+ render(){const c=this.cfg(),el=this.el,esc=ROS.esc,gs=COMP.gs(),A=[...new Set(this.all(c))],N=this.names(c);
+  const src=[['stu','طلاب المجموعات'],['teams','أسماء المجموعات نفسها'],['custom','أسماء أكتبها']],T=c.teams&&c.teams.length?c.teams:gs.map((_,k)=>k);
+  let h='<h2>عجلة الأسماء</h2>';let w='<div class="cp-sub sm">ماذا تدير العجلة؟</div><div class="chips">'+src.map(([k,n])=>'<button class="chip'+(c.src===k?' ok':'')+'" data-src="'+k+'">'+esc(n)+'</button>').join('')+'</div>'+(c.src==='stu'?'<div class="cp-sub sm">اختر المجموعات (مجموعة أو أكثر)</div><div class="wh-teams">'+gs.map((g,k)=>'<button class="wh-t'+(T.includes(k)?' on':'')+'" data-team="'+k+'" style="--c:'+GC[k]+'">'+(T.includes(k)?'✓ ':'')+esc(g.replace('مجموعة ',''))+' <small>'+AR(ROS.st().list.filter(m=>m.g===k).length)+'</small></button>').join('')+'</div>':'');
+  if(c.src==='custom')w+='<textarea id="wh-in" rows="3" placeholder="اكتب الأسماء: كل اسم في سطر">'+esc(c.custom)+'</textarea>';
+  else if(!A.length)w+='<p class="how">لا أسماء هنا بعد. سجّل الطلاب من زر «المتسابقون»، أو اختر «أسماء أكتبها».</p>';
+  w+='<div class="wh-opt"><label><input type="checkbox" id="wh-drop"'+(c.drop?' checked':'')+'> احذف الاسم بعد ظهوره، حتى يأخذ الجميع دورهم</label>'+(c.drop&&(c.removed.length||c.pend)?'<button class="btn ghost sm" id="wh-reset">أعد كل الأسماء ('+AR(c.removed.length+(c.pend?1:0))+')</button>':'')+'</div>';
+  h+='<div class="wh-box"><div class="wh-ptr"></div><canvas id="wh-c"></canvas><button class="wh-go" id="wh-go"'+(N.length<1?' disabled':'')+'>أدِر</button></div>';
+  h+='<div class="wh-res" id="wh-res">'+(this.win?'<small>وقعت العجلة على</small><b>'+esc(this.win)+'</b>':'<small>'+AR(N.length)+' '+(N.length===1?'اسم':'أسماء')+' في العجلة</small>')+'</div>'+w;
+  el.innerHTML=h;
+  el.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{const k=+b.dataset.team;let t=(c.teams&&c.teams.length?c.teams:gs.map((_,i)=>i)).slice();t=t.includes(k)?t.filter(x=>x!==k):t.concat(k);if(!t.length)return;c.teams=t;c.removed=[];c.pend=null;this.win=null;this.save(c);FX.tick();this.render()});
+  el.querySelectorAll('[data-src]').forEach(b=>b.onclick=()=>{c.src=b.dataset.src;c.removed=[];c.pend=null;this.win=null;this.save(c);FX.tick();this.render()});
+  if($('wh-in'))$('wh-in').oninput=e=>{c.custom=e.target.value;this.save(c);this.draw()};
+  if($('wh-in'))$('wh-in').onchange=()=>this.render();
+  $('wh-drop').onchange=e=>{c.drop=e.target.checked;this.save(c);this.render()};
+  if($('wh-reset'))$('wh-reset').onclick=()=>{c.removed=[];c.pend=null;this.win=null;this.save(c);FX.tick();this.render()};
+  $('wh-go').onclick=()=>this.spin();this.draw()},
+ draw(){const cv=$('wh-c');if(!cv)return;const c=this.cfg(),N=this.names(c),box=cv.parentElement,S=Math.min(box.clientWidth||340,460),dpr=window.devicePixelRatio||1;
+  cv.width=S*dpr;cv.height=S*dpr;cv.style.width=cv.style.height=S+'px';const x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);const r=S/2-6,cx=S/2,cy=S/2;
+  x.clearRect(0,0,S,S);if(!N.length){x.fillStyle='#EEE';x.beginPath();x.arc(cx,cy,r,0,7);x.fill();return}
+  const seg=Math.PI*2/N.length;
+  N.forEach((n,i)=>{const a0=this.ang+i*seg;x.beginPath();x.moveTo(cx,cy);x.arc(cx,cy,r,a0,a0+seg);x.closePath();x.fillStyle=this.COL[i%this.COL.length];x.fill();x.strokeStyle='#fff';x.lineWidth=3;x.stroke();
+   x.save();x.translate(cx,cy);const mid=((a0+seg/2)%(Math.PI*2)+Math.PI*2)%(Math.PI*2),flip=mid>Math.PI/2&&mid<Math.PI*1.5;x.rotate(a0+seg/2+(flip?Math.PI:0));x.textAlign=flip?'left':'right';x.textBaseline='middle';x.fillStyle='#fff';
+   const t=n.replace(/^مجموعة\s+/,''),avail=r-16-58;let fs=Math.max(11,Math.min(24,r*seg*.55));x.font='800 '+fs+'px Alyamama, Beiruti, sans-serif';while(fs>11&&x.measureText(t).width>avail){fs--;x.font='800 '+fs+'px Alyamama, Beiruti, sans-serif'}x.shadowColor='rgba(0,0,0,.25)';x.shadowBlur=3;
+   let u=t;while(u.length>3&&x.measureText(u).width>avail)u=u.slice(0,-1);if(u!==t)u=u.slice(0,-1)+'…';x.fillText(u,flip?-(r-16):r-16,0);x.restore()});
+  x.beginPath();x.arc(cx,cy,r,0,7);x.strokeStyle='#fff';x.lineWidth=6;x.stroke()},
+ spin(){if(this.spinning)return;const c=this.cfg();if(c.pend){if(c.drop)c.removed.push(c.pend);c.pend=null;this.save(c);this.draw()}const N=this.names(c);if(!N.length){this.win=null;this.render();$('wh-res').innerHTML='<small>انتهت الأسماء كلها</small><b>أعد الأسماء لجولة جديدة</b>';return}this.spinning=true;this.win=null;$('wh-go').disabled=true;$('wh-res').innerHTML='<small>تدور…</small>';
+  const seg=Math.PI*2/N.length,start=this.ang,turns=5+Math.random()*3,target=start+turns*Math.PI*2+Math.random()*Math.PI*2,T=4800,t0=performance.now();let lastI=-1;
+  const idx=a=>{const p=((-Math.PI/2-a)%(Math.PI*2)+Math.PI*4)%(Math.PI*2);return Math.floor(p/seg)%N.length};
+  const step=now=>{const t=Math.min(1,(now-t0)/T),e=1-Math.pow(1-t,4);this.ang=start+(target-start)*e;this.draw();const i=idx(this.ang);if(i!==lastI){lastI=i;FX.tone(900+(i%3)*80,.03,'triangle',.04)}
+   if(t<1)requestAnimationFrame(step);else{this.spinning=false;const w=N[idx(this.ang)];this.win=w;if(c.drop){c.pend=w;this.save(c)}FX.ok(null,true);try{CEL(w,'وقعت العجلة على')}catch(e){}this.render()}};
+  requestAnimationFrame(step)}};
+WHEEL.init();
+
 
 
 // ===== Learn (cards) and Honor (badges + history)
@@ -1890,7 +1948,7 @@ MIL.init();
 })();
 
 // ===== Home: splash, tiles, back to home
-(()=>{const TITLES={host:'مسابقة الحلقة',ten10:'تحدّي العشرة',mil:'من سيربح ١٠٠؟',roster:'المتسابقون',settings:'إعدادات الأسئلة',order:'رتّب',duel:'المبارزة',bell:'الجرس',ladder:'سُلّم الحفّاظ',reveal:'اكشف السورة',mapg:'خريطة المصحف',quran:'أسئلة قرآنية',ten:'العشرة المبشرون',umm:'أمهات المؤمنين',adwa:'القرآن بالقرآن',comp:'مسابقة المجموعات',vote:'تحدي التصويت',learn:'تعلّم قبل أن تُسأل',honor:'لوحة الشرف'};G.forEach(g=>TITLES[g.id]=g.name);
+(()=>{const TITLES={host:'مسابقة الحلقة',ten10:'تحدّي العشرة',mil:'من سيربح ١٠٠؟',wheel:'عجلة الأسماء',roster:'المتسابقون',settings:'إعدادات الأسئلة',order:'رتّب',duel:'المبارزة',bell:'الجرس',ladder:'سُلّم الحفّاظ',reveal:'اكشف السورة',mapg:'خريطة المصحف',quran:'أسئلة قرآنية',ten:'العشرة المبشرون',umm:'أمهات المؤمنين',adwa:'القرآن بالقرآن',comp:'مسابقة المجموعات',vote:'تحدي التصويت',learn:'تعلّم قبل أن تُسأل',honor:'لوحة الشرف'};G.forEach(g=>TITLES[g.id]=g.name);
 
  const sp=$('splash');let shown=false;try{shown=sessionStorage.getItem('tz_splash')==='1'}catch(e){}
  const hideSp=()=>{if(sp.hidden)return;sp.classList.add('out');setTimeout(()=>sp.hidden=true,700);document.querySelectorAll('.tile').forEach(t=>t.style.setProperty('--base','0ms'));try{sessionStorage.setItem('tz_splash','1')}catch(e){}};
@@ -1910,7 +1968,7 @@ MIL.init();
   if(id==='vote'){location.hash='vote';show('vote');VOTE.render();enter('vote');return}
   if(id==='comp'){location.hash='comp';show('comp');COMP.render();enter('comp');return}
   location.hash=id;show(id);enter(id)});
- const fromHash=()=>{const h=location.hash.slice(1);if(h==='mapg')MAPG.render();if(h==='bell')BELL.render();if(h==='ladder')LAD.render();if(h==='reveal')REV.render();if(h==='order')ORD.render();if(h==='host')HOST.render();if(h==='ten10')T10.render();if(h==='mil')MIL.render();if(h==='roster')ROS.render();if(h==='duel')DUEL.render();if(h==='learn')renderLearn();if(h==='honor')renderHonor();if(h&&(G.some(g=>g.id===h)||['quran','comp','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil'].includes(h)))enter(h);else document.body.classList.remove('inpanel')};
+ const fromHash=()=>{const h=location.hash.slice(1);if(h==='mapg')MAPG.render();if(h==='bell')BELL.render();if(h==='ladder')LAD.render();if(h==='reveal')REV.render();if(h==='order')ORD.render();if(h==='host')HOST.render();if(h==='ten10')T10.render();if(h==='mil')MIL.render();if(h==='wheel')WHEEL.render();if(h==='roster')ROS.render();if(h==='duel')DUEL.render();if(h==='learn')renderLearn();if(h==='honor')renderHonor();if(h&&(G.some(g=>g.id===h)||['quran','comp','vote','learn','honor','mapg','bell','ladder','reveal','order','duel','host','roster','ten10','mil','wheel'].includes(h)))enter(h);else document.body.classList.remove('inpanel')};
  window.addEventListener('hashchange',fromHash);fromHash();
 })();
 
@@ -1930,7 +1988,7 @@ document.addEventListener('keydown',e=>{if(e.code!=='Space')return;if(!P.nback.h
 ;// ===== Tools row, backup and restore
 (()=>{const keys=()=>{const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('tz2_'))o[k]=localStorage.getItem(k)}}catch(e){}return o};
  document.querySelectorAll('.tools button').forEach(b=>b.onclick=()=>{FX.tick();const t=b.dataset.tool;
-  if(t==='skin'){const r=document.documentElement,on=r.dataset.skin==='marah';if(on)delete r.dataset.skin;else r.dataset.skin='marah';try{localStorage.setItem('tz2_skin',on?'sky':'marah')}catch(e){}return}if(t==='roster'){ROS.open();return}if(t==='board'){SB.open('comp');return}if(t==='backup'){$('bk-msg').textContent='';$('bk').hidden=false;return}
+  if(t==='wheel'){WHEEL.open();return}if(t==='skin'){const r=document.documentElement,on=r.dataset.skin==='marah';if(on)delete r.dataset.skin;else r.dataset.skin='marah';try{localStorage.setItem('tz2_skin',on?'sky':'marah')}catch(e){}return}if(t==='roster'){ROS.open();return}if(t==='board'){SB.open('comp');return}if(t==='backup'){$('bk-msg').textContent='';$('bk').hidden=false;return}
   if(t==='settings'){QZ.all();location.hash='quran';show('quran');return}
   if(t==='honor'){renderHonor();location.hash='honor';show('honor')}else{renderLearn();location.hash='learn';show('learn')}});
  $('bk-x').onclick=()=>{$('bk').hidden=true};
