@@ -954,6 +954,11 @@ body.disp .mg-pcs i{font-size:14px}
 @media (max-width:620px){.mg-pcs{gap:4px;margin-top:6px}.mg-pcs i{font-size:0;width:10px;height:10px;padding:0;border-radius:50%;border:0}
 .mg-pcs i.p-stop{background:#B3261E!important}.mg-pcs i.p-rev{background:#1F6FB2!important}.mg-pcs i.p-c5{background:#C9932A!important}.mg-pcs i.p-c10{background:#6B3FA0!important}
 .mg-tm.on .mg-pcs i{box-shadow:0 0 0 1.5px #fff}.mg-pcs i.used{opacity:.18;text-decoration:none}}
+
+.disp-back{display:none}
+body.disp .disp-back{display:inline-flex;align-items:center;position:fixed;top:max(10px,env(safe-area-inset-top));inset-inline-start:10px;z-index:80;font:inherit;font-weight:800;font-size:14px;padding:9px 16px;border-radius:999px;border:1.5px solid rgba(15,20,36,.18);background:rgba(255,255,255,.92);color:#0F1424;box-shadow:0 6px 18px -8px rgba(0,0,0,.35);cursor:pointer;opacity:.55;transition:opacity .2s;pointer-events:auto}
+body.disp .disp-back:hover,body.disp .disp-back:active,body.disp .disp-back:focus{opacity:1}
+@media (hover:none){body.disp .disp-back{opacity:1;background:#fff;border-color:rgba(15,20,36,.3)}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1981,8 +1986,9 @@ const LEAGUE={el:null,
 LEAGUE.init();
 // ===== تشغيل شاشة العرض (نافذة للطلاب تتبع نافذة المشرف لحظة بلحظة)
 {const _r=MAPG.render;MAPG.render=function(){_r.apply(this,arguments);if(!this.disp&&this.st&&this.st.active)try{this.save()}catch(e){}}}
+addEventListener('hashchange',()=>{if(location.hash==='#mapg-display'&&!document.body.classList.contains('disp'))location.reload()});
 (()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};MAPG.playCard=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
-  const load=()=>{const v=store.get('mapg');if(v)MAPG.st=Object.assign(MAPG.def(),v)};load();show('mapg');MAPG.render();document.title='ميدان التركيز · شاشة العرض';
+  const load=()=>{const v=store.get('mapg');if(v)MAPG.st=Object.assign(MAPG.def(),v)};load();show('mapg');MAPG.render();document.title='ميدان التركيز · شاشة العرض';const bk=document.createElement('button');bk.className='disp-back';bk.type='button';bk.dir='rtl';bk.textContent='→ رجوع إلى التحكم';bk.onclick=()=>{let closed=false;if(window.opener&&!window.opener.closed){try{window.close();closed=window.closed}catch(e){}}setTimeout(()=>{if(!window.closed){location.replace(location.href.split('#')[0]+'#mapg');location.reload()}},150)};document.body.appendChild(bk);
   let lastEv=JSON.stringify(MAPG.st.ev||null);
   let lastPc=JSON.stringify(MAPG.st.pcfx||null);addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const pc=JSON.stringify(MAPG.st.pcfx||null);if(pc!==lastPc&&MAPG.st.pcfx)MAPG.showCard(MAPG.st.pcfx);lastPc=pc;const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
   addEventListener('storage',e=>{if(e.key==='tz2_mapg_reveal'&&e.newValue){const r=JSON.parse(e.newValue);COMP.reveal(r.gs,r.ps,r.t)}})};
