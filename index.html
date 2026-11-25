@@ -888,6 +888,13 @@ input,select,textarea{font-size:16px!important}
 .qr-h button{margin-inline-start:auto;font:inherit;font-size:12px;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:2px 10px;cursor:pointer}
 .qr-q{font-weight:800;margin:6px 0 2px}.qr-a{font-family:'Amiri',serif;font-size:17px;color:var(--ink)}
 .qr-i ol{margin:6px 0 0;padding-inline-start:22px;font-size:14px}.qr-i li.ok{color:var(--ok);font-weight:800}
+
+.mg-key{margin:10px 0 6px;padding:14px;border-radius:16px;background:color-mix(in srgb,var(--ok) 9%,var(--paper));border:2px solid color-mix(in srgb,var(--ok) 45%,var(--line));text-align:center;animation:aidIn .35s}
+.mg-key small{display:block;color:var(--muted);font-weight:700;font-size:12.5px;margin-bottom:6px}
+.mg-ans{font-family:var(--display);font-size:clamp(20px,5.5vw,26px);font-weight:700;color:var(--ink);line-height:1.6}.mg-ans.ay{font-family:'Amiri',serif;font-weight:400;font-size:clamp(22px,6vw,28px)}
+.mg-judge{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.mg-judge button{padding:16px 8px;border-radius:16px;border:0;font:inherit;font-family:var(--display);font-size:22px;font-weight:800;color:#fff;cursor:pointer;transition:transform .12s}
+.mg-judge button:active{transform:scale(.97)}.mg-judge .ok{background:var(--ok);box-shadow:0 5px 0 color-mix(in srgb,var(--ok) 70%,#000)}.mg-judge .no{background:var(--bad);box-shadow:0 5px 0 color-mix(in srgb,var(--bad) 70%,#000)}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1511,9 +1518,9 @@ const MAPG={st:null,timer:null,
   if(ask){const q=st.q,who=st.phase==='steal'?st.stealer:st.turn,H=this.helps(who),j=this.juzOf(st.sel);
    h+='<div class="mg-q" style="--c:'+GC[who]+'"><div class="mg-qh"><span class="mg-who">'+(st.phase==='steal'?'فرصة سرقة لـ ':'')+esc(this.short(gs[who]))+'</span><span class="mg-pl">'+this.lab(st.sel)+' · بـ'+this.pts(this.val(j))+'</span><span class="qsec" id="mg-sec"></span></div>'+
     '<div class="mg-kind">'+(q.kn||'')+'</div><div class="qask">'+q.ask+'</div>'+(q.ayah?'<div class="ayah">'+q.ayah+'</div>':'')+
-    '<div class="qchoices">'+q.opts.map((o,i)=>(q.gone&&q.gone.includes(i)?'':'<button class="qc'+(q.ay?' ay':'')+'" data-i="'+i+'">'+o+'</button>')).join('')+'</div>'+
-    (st.phase==='ask'&&K>1?(st.yq?'<div class="mg-yq on">تحدّي اليقين مفعّل: إن أصبتم أخذتم خانة مجاورة معها، وإن أخطأتم ذهبت إلى الفريق التالي</div>':'<button class="mg-yq" id="mg-yq">فعّل «تحدّي اليقين» قبل الإجابة</button>'):'')+
-    '<div class="mg-help">'+[['del','حذف خيارين'],['frz','إيقاف الوقت'],['more','مهلة ٣٠ ث']].map(([k,n])=>'<button data-h="'+k+'"'+(H[k]?'':' disabled')+'>'+n+'</button>').join('')+'</div>'+QREP.btn('mg-rep')+'</div>'}
+    (st.yq&&st.phase==='ask'?'<div class="mg-key"><small>الجواب الصحيح (يجيب الطالب من حفظه، ثم احكم أنت)</small><div class="mg-ans'+(q.ay?' ay':'')+'">'+q.ans+'</div></div><div class="mg-judge"><button class="ok" id="mg-ok">أصاب</button><button class="no" id="mg-no">أخطأ</button></div>':'<div class="qchoices">'+q.opts.map((o,i)=>(q.gone&&q.gone.includes(i)?'':'<button class="qc'+(q.ay?' ay':'')+'" data-i="'+i+'">'+o+'</button>')).join('')+'</div>')+
+    (st.phase==='ask'&&K>1?(st.yq?'<div class="mg-yq on">تحدّي اليقين: إن أصابوا أخذوا معها خانة مجاورة، وإن أخطؤوا ذهبت الخانة إلى الفريق التالي</div>':'<button class="mg-yq" id="mg-yq">«تحدّي اليقين»: يجيبون من حفظهم دون خيارات</button>'):'')+
+    '<div class="mg-help">'+[['del','حذف خيارين'],['frz','إيقاف الوقت'],['more','مهلة ٣٠ ث']].filter(([k])=>!(k==='del'&&st.yq&&st.phase==='ask')).map(([k,n])=>'<button data-h="'+k+'"'+(H[k]?'':' disabled')+'>'+n+'</button>').join('')+'</div>'+QREP.btn('mg-rep')+'</div>'}
   else h+='<div class="mg-turn" style="--c:'+GC[st.turn]+'"><small>الدور على</small><b>'+esc(this.short(gs[st.turn]))+'</b><span>اختر خانة من اللوحة</span></div>';
   // اللوحة
   const fx=st.fx&&Date.now()-st.fx.at<1600?st.fx:null;let cur=0;
@@ -1531,6 +1538,7 @@ const MAPG={st:null,timer:null,
   el.querySelectorAll('.qc[data-i]').forEach(b=>b.onclick=()=>this.answer(+b.dataset.i,b));
   el.querySelectorAll('.mg-help button').forEach(b=>b.onclick=()=>this.useHelp(b.dataset.h));
   QREP.bind('mg-rep',()=>st.q);
+  if($('mg-ok')){const q=st.q;$('mg-ok').onclick=e=>this.answer(q.opts.indexOf(q.ans),e.currentTarget);$('mg-no').onclick=e=>this.answer(q.opts.findIndex(o=>o!==q.ans),e.currentTarget)}
   if($('mg-yq'))$('mg-yq').onclick=()=>{st.yq=1;st.log.unshift(this.short(gs[st.turn])+' اختار تحدّي اليقين');this.save();FX.tone(880,.12);this.render()};
   $('mg-end').onclick=()=>{if(confirm('إعلان النتيجة الآن؟ (تبقى الخريطة محفوظة)'))COMP.reveal(gs,gs.map((_,k)=>this.score(k)),'خريطة المصحف')};
   $('mg-more').onclick=()=>{this.tools=!this.tools;if(!this.tools)this.ded=false;FX.tick();this.render();if(this.tools)setTimeout(()=>$('mg-tools')||el.querySelector('.mg-tools').scrollIntoView({behavior:'smooth',block:'center'}),40)};
