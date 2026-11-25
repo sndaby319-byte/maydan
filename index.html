@@ -1198,7 +1198,8 @@ const TEN=[["أبو بكر الصديق", "ما اسم أبي بكر الصدي�
  const DIFF=['سهل','متوسط','صعب','متنوع'];
  let kinds=store.get('qkinds2')||KINDS.map(k=>k[0]).filter(k=>!['ten','umm','proph'].includes(k)),srcs=store.get('qsrc')||['م','ج','س'],J1=store.get('qj1b')||1,J2=store.get('qj2b')||30,DF=store.get('qdf')??3,L=0,N=store.get('qn')||10,i=0,ok=0,q=null,t0=0,tq=0,timer=null,live=false,answered=false;
  let seen=store.get('qseen')||[];const seenS=new Set(seen);const mark=k=>{if(seenS.has(k))return;seen.push(k);seenS.add(k);if(seen.length>600){seenS.delete(seen.shift())}store.set('qseen',seen)};
- const RANGE=()=>{const r=[];for(let k=0;k<QD.a.length;k++){const j=QD.a[k][3];if(j>=J1&&j<=J2)r.push(k)}return r};
+ const DUP=(()=>{const key=k=>W(QD.a[k][4]).map(nrm).slice(0,16).join(' '),m={};QD.a.forEach((_,k)=>{const x=key(k);m[x]=(m[x]||0)+1});const d=new Set();QD.a.forEach((_,k)=>{if(m[key(k)]>1)d.add(k)});return d})();
+ const RANGE=()=>{const r=[];for(let k=0;k<QD.a.length;k++){const j=QD.a[k][3];if(j>=J1&&j<=J2&&!DUP.has(k))r.push(k)}return r};
  const ref=x=>'سورة '+SN(x[0])+'، الآية '+AR(x[1])+'، صفحة '+AR(x[2])+'، الجزء '+AR(x[3]);
  const dk=p=>nrm(String(p))+'|'+String(p).replace(/[^\u0660-\u0669]/g,'');
  function distinct(ans,pool,n){const seen=new Set([dk(ans)]),out=[];for(const p of shuffle([...pool])){const k=dk(p);if(!k||seen.has(k))continue;seen.add(k);out.push(p);if(out.length>=n)break}return out}
@@ -1221,8 +1222,8 @@ const TEN=[["أبو بكر الصديق", "ما اسم أبي بكر الصدي�
    const offs=[[9,14,-12,20,25,-18],[3,4,-3,5,-4,6],[1,-1,2,-2,3]][d-1];const ans=head(onP[0],5);
    o={kind,key:'p'+p,ask:'هذه الآية من وسط صفحة في المصحف، فما أول الصفحة؟',ayah:cut(w,0,14)+(w.length>14?' …':''),ans,ch:distinct(ans,offs.map(z=>startOf(p+z)).filter(Boolean),3),ay:true,refTxt:'بداية صفحة '+AR(p)+': سورة '+SN(QD.a[onP[0]][0])+'، الآية '+AR(QD.a[onP[0]][1]),full:QD.a[onP[0]][4]}}
   else if(kind==='pend'||kind==='mid'){
-   if(!window._PG){const m={};QD.a.forEach((x,k)=>{(m[x[2]]=m[x[2]]||[]).push(k)});window._PG=m}const ofP=p=>window._PG[p]||[];
-   const pages=[...new Set(R.map(k=>QD.a[k][2]))].filter(p=>(kind==='pend'?ofP(p).length>=3:L7(ofP(p))!==null&&L7(ofP(p))!==ofP(p)[0])&&QD.a[ofP(p)[0]][3]>=J1&&QD.a[ofP(p)[0]][3]<=J2);
+   const at0=X=>X[X.length-1];if(!window._PG){const m={};QD.a.forEach((x,k)=>{(m[x[2]]=m[x[2]]||[]).push(k)});window._PG=m}const ofP=p=>window._PG[p]||[];
+   const pages=[...new Set(R.map(k=>QD.a[k][2]))].filter(p=>!DUP.has(ofP(p)[0])&&!DUP.has(at0(ofP(p)))&&(kind==='pend'?ofP(p).length>=3:L7(ofP(p))!==null&&L7(ofP(p))!==ofP(p)[0])&&QD.a[ofP(p)[0]][3]>=J1&&QD.a[ofP(p)[0]][3]<=J2);
    if(!pages.length)return gen('surah',d);
    const p=fresh(pages,p=>kind+p),L=ofP(p),at=X=>kind==='pend'?X[X.length-1]:L7(X),ak=at(L),ans=head(ak,6);
    const offs=[[6,-7,9,-10,12,-12],[2,-2,3,-3,4,-4],[1,-1,2,-2,3,-3]][d-1];
