@@ -1248,7 +1248,7 @@ const TEN=[["أبو بكر الصديق", "ما اسم أبي بكر الصدي�
    const asb=ASB.filter(x=>x.j===j&&!seenS.has('b'+x.i));
    if(asb.length&&d>=2&&Math.random()<.3){const x=pick(asb);o={kind:'asb',key:'b'+x.i,ask:x.q,ayah:'',ans:x.a,ch:x.w.slice(0,3),ay:false,d:Math.max(2,d),refTxt:'من «الصحيح المسند من أسباب النزول» للشيخ مقبل الوادعي، '+x.loc+': «'+x.ev+'»'}}
    else{const hasW=QD.w.some(z=>{const q=QD.a[z[0]];return q[3]===j&&srcs.includes(z[3])});
-    const K=[['word',hasW?32:0],['pend',16],['mid',12],['slast',12],['twin',14],['surah',14]],tot=K.reduce((x,y)=>x+y[1],0);
+    const K=[['word',hasW?32:0],['pend',22],['slast',18],['twin',14],['surah',14]],tot=K.reduce((x,y)=>x+y[1],0);
     let k='pend',r=Math.random()*tot;for(const [n,w] of K){if((r-=w)<0){k=n;break}}
     for(let t=0;t<4&&!o;t++){try{const x=gen(k,d);if(x&&x.ch&&x.ch.length>=3&&(x.kind===k||k==='twin'))o=x;else k=pick(['pend','surah'])}catch(e){k=pick(['pend','surah'])}}}
    if(!o)o=gen('surah',2);o.d=o.d||Math.max(2,d);o.kn=KN[o.kind]||'';mark(o.key);return o}finally{J1=a;J2=b}}
@@ -1604,13 +1604,13 @@ const GK2={last:[],
   if(t===2)return this.mk('ما الدولة التي تحدّ المملكة من الجنوب الشرقي؟','عُمان',['اليمن','قطر','العراق'],'الجغرافيا',2,'<b>عُمان</b>. '+ev);
   return this.mk('ما الدولة المرتبطة بالمملكة بجسر بحري من جهة الشرق؟','البحرين',['قطر','الكويت','الإمارات'],'الجغرافيا',2,'<b>البحرين</b>. '+ev)}};
 const HOST={el:null,st:null,tm:null,
- Q:[['pend','نهاية الصفحة'],['mid','السطر السابع'],['slast','آخر آية في السورة'],['next','الآية التالية'],['page','بداية الصفحة'],['twin','المتشابهات'],['surah','في أي سورة؟'],['juz','في أي جزء؟'],['word','معاني المفردات'],['adwa','القرآن بالقرآن']],
+ Q:[['pend','نهاية الصفحة'],['slast','آخر آية في السورة'],['next','الآية التالية'],['page','بداية الصفحة'],['twin','المتشابهات'],['surah','في أي سورة؟'],['juz','في أي جزء؟'],['word','معاني المفردات'],['adwa','القرآن بالقرآن']],
  C:[['sah','السيرة وأعلام الصحابة'],['ant','الأضداد'],['sci','علماء المسلمين'],['geo','الجغرافيا'],['nat','الطبيعة والعلوم'],['proph','الأنبياء'],['ten','العشرة المبشرون'],['umm','أمهات المؤمنين'],['name','أسماء الله الحسنى']],
  M:[['turn','بالتناوب'],['fast','من يرفع يده أولًا'],['all','الكل يجيب']],
  init(){this.el=mkSec('host');const s=store.get('host_st');if(s&&s.active)this.st=s},
  park(){const st=this.st;if(!st)return;ARC.put('host',st,'مسابقة الحلقة · السؤال '+AR(st.i)+' من '+AR(st.N),this.gs(),st.pts);this.st=null;store.set('host_st',null);FX.tick();this.render()},
  resume(s){this.st=s;s.t0=Date.now();this.render()},gs(){return COMP.gs()},
- cfg(){return Object.assign({mode:'turn',kinds:['pend','mid','slast','twin','surah','proph','ten'],d:0,j1:1,j2:30,N:10,sec:30},store.get('hostcfg')||{},(()=>{const c=store.get('hostcfg');return c&&c.kinds?{kinds:[...new Set(c.kinds.map(k=>k==='complete'?'pend':k==='end'?'slast':k))]}:{}})())},
+ cfg(){return Object.assign({mode:'turn',kinds:['pend','slast','twin','surah','proph','ten'],d:0,j1:1,j2:30,N:10,sec:30},store.get('hostcfg')||{},(()=>{const c=store.get('hostcfg');return c&&c.kinds?{kinds:[...new Set(c.kinds.map(k=>k==='complete'?'pend':k==='end'?'slast':k).filter(k=>k!=='mid'))]}:{}})())},
  render(){const el=this.el,st=this.st;clearInterval(this.tm);store.set('host_st',st&&st.active?st:null);
   if(!st||!st.active){const c=this.cfg(),sv=()=>store.set('hostcfg',c),ch=(arr,on,cls)=>arr.map(([k,n])=>'<button class="chip'+(on(k)?' ok':'')+'" data-'+cls+'="'+k+'">'+n+'</button>').join('');const o=(n,a,b)=>[...Array(b-a+1)].map((_,i)=>'<option'+(i+a===n?' selected':'')+' value="'+(i+a)+'">'+AR(i+a)+'</option>').join('');
    el.innerHTML='<h2>مسابقة الحلقة</h2>'+ARC.html('host')+'<p class="how">يقرأ المشرف السؤال، وتجيب المجموعة بصوتها، ثم يضغط المشرف الإجابة التي قالتها. لا يلمس الطلاب الجهاز.</p>'+
@@ -1778,7 +1778,7 @@ T10.init();
 // ===== من سيربح ١٠٠ / ٢٠٠: سلّم من عشرة أسئلة متنوعة، ووسائل مساعدة، ونقطة أمان
 const MIL={el:null,st:null,tm:null,
  LAD:{100:[5,10,15,20,25,35,45,60,80,100],200:[10,20,30,40,60,80,100,130,160,200]},SAFE:[4,7],
- REL:['pend','mid','slast','surah','juz','proph','ten','umm','name','sah','sah'],
+ REL:['pend','slast','surah','juz','proph','ten','umm','name','sah','sah'],
  GKQ:{'w-area':'أيّ هذه الدول أكبر مساحة؟','w-pop':'أيّ هذه الدول أكثر سكانًا؟','w-river':'أيّ هذه الأنهار أطول؟','w-ocean':'أيّ هذه المحيطات أكبر؟',
   'k-ppop':'أيّ هذه المناطق أكثر سكانًا في المملكة؟','k-city':'أيّ هذه المدن أكثر سكانًا في المملكة؟','q-long':'أيّ هذه السور أكثر آيات؟',
   'q-muq':'أيّ هذه السور تبدأ بالحروف المقطّعة؟','q-hamd':'أيّ هذه السور تبدأ بـ«الحمد لله»؟','q-sab':'أيّ هذه السور تبدأ بالتسبيح؟','q-ya':'أيّ هذه السور تبدأ بـ«يا أيها»؟','q-psur':'أيّ هذه السور سُمّيت باسم نبي؟',
