@@ -928,6 +928,32 @@ body.disp .mg-bar{top:0;position:sticky}body.disp #panels{max-width:1500px}body.
 body.disp .qask{font-size:clamp(24px,2.6vw,36px)!important}body.disp .qc{font-size:clamp(20px,2vw,30px)!important}
 body.disp .mg-cells{grid-template-columns:repeat(auto-fill,minmax(64px,1fr))}body.disp .mg-board .mg-c{font-size:22px!important}
 body.disp .mg-turn b{font-size:40px}body.disp .mg-jh b{font-size:24px}
+
+/* ===== بطاقات المجموعات */
+.mg-pcs{display:flex;gap:3px;justify-content:center;margin-top:5px;flex-wrap:wrap}
+.mg-pcs i{font-style:normal;font-size:10.5px;font-weight:800;padding:1px 6px;border-radius:6px;background:color-mix(in srgb,var(--c) 18%,var(--paper));color:var(--c);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.mg-tm.on .mg-pcs i{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.45)}
+.mg-pcs i.used{opacity:.28;text-decoration:line-through}
+.mg-hand{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;padding-top:8px;border-top:1px dashed color-mix(in srgb,var(--c) 35%,var(--line))}
+.mg-hand small{flex-basis:100%;font-size:12px}
+.mg-hand button{font:inherit;font-weight:800;font-size:15px;padding:7px 14px;border-radius:12px;cursor:pointer;color:#fff;border:0;box-shadow:0 3px 0 rgba(0,0,0,.25);background:#1F2A4A}
+.mg-hand .pc-stop{background:#B3261E}.mg-hand .pc-rev{background:#1F6FB2}.mg-hand .pc-c5{background:#C9932A}.mg-hand .pc-c10{background:#6B3FA0}
+.mg-hand button.on{outline:3px solid var(--c);outline-offset:2px}
+.mg-hand button:disabled{opacity:.25;cursor:default;box-shadow:none;text-decoration:line-through}
+.mg-tg{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.mg-tg small{flex-basis:100%;font-size:13px;line-height:1.6;color:var(--ink)!important;animation:none!important}
+.mg-tg button{font:inherit;font-weight:800;padding:7px 14px;border-radius:12px;cursor:pointer;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 12%,var(--paper));color:var(--c)}
+.mg-tg button.x{border-color:var(--line);color:var(--muted);background:var(--paper)}
+.mg-turn .mg-hand small,.mg-turn .mg-tg small{margin:0;animation:none}
+.mg-q.duel{border-style:dashed;border-width:3px}
+.mg-rev{color:#1F6FB2!important;font-weight:800}
+.mg-card.tc .mg-card-in{border-color:#F2C14E;background:radial-gradient(120% 80% at 50% 0,#5A2A2A 0%,#1A1424 60%,#0F1424 100%)}
+body.disp .mg-hand,body.disp .mg-tg{display:none!important}
+body.disp .mg-pcs i{font-size:14px}
+
+@media (max-width:620px){.mg-pcs{gap:4px;margin-top:6px}.mg-pcs i{font-size:0;width:10px;height:10px;padding:0;border-radius:50%;border:0}
+.mg-pcs i.p-stop{background:#B3261E!important}.mg-pcs i.p-rev{background:#1F6FB2!important}.mg-pcs i.p-c5{background:#C9932A!important}.mg-pcs i.p-c10{background:#6B3FA0!important}
+.mg-tm.on .mg-pcs i{box-shadow:0 0 0 1.5px #fff}.mg-pcs i.used{opacity:.18;text-decoration:none}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1513,7 +1539,7 @@ const CEL=(title,sub)=>{const d=document.createElement('div');d.className='cel';
  d.onclick=()=>d.remove();setTimeout(()=>d.classList.add('out'),2200);setTimeout(()=>d.remove(),2800)};
 
 const MAPG={st:null,timer:null,
- def(){return{active:false,rounds:0,turns:0,streak:{},ev:null,shield:{},hint:null,j1:1,j2:3,sec:30,turn:0,owner:{},done:{},log:[],q:null,sel:null,phase:'pick',tr:{},bonus:{},help:{},hday:''}},
+ def(){return{active:false,rounds:0,turns:0,streak:{},ev:null,shield:{},hint:null,pc:{},dir:1,skip:{},duel:null,again:0,pcfx:null,j1:1,j2:3,sec:30,turn:0,owner:{},done:{},log:[],q:null,sel:null,phase:'pick',tr:{},bonus:{},help:{},hday:''}},
  seedTreasure(){const st=this.st,P=this.pages(),js=[...new Set(P.map(p=>this.juzOf(p)))],top=Math.min(...js);
   js.forEach(j=>{const L=P.filter(p=>this.juzOf(p)===j),want=j===top?3:2;let have=L.filter(p=>st.tr[p]===1||st.tr[p]===2).length;const free=shuffle(L.filter(p=>st.owner[p]===undefined&&!st.tr[p]));while(have<want&&free.length){st.tr[free.pop()]=1;have++}})},
  helps(k){const st=this.st,d=today();if(st.hday!==d){st.help={};st.hday=d}st.help[k]=st.help[k]||{del:1,frz:1,more:1};return st.help[k]},
@@ -1533,14 +1559,32 @@ const MAPG={st:null,timer:null,
   if(st.rounds&&rd===st.rounds)c=this.FINAL;else if(rd>1||Math.random()<.5){if(Math.random()<.7)c=pick(this.CARDS.filter(x=>!st.ev||x.id!==st.ev.id))}
   st.hint=null;if(c&&c.id==='map'){const L=this.pages().filter(p=>st.tr[p]===1&&st.owner[p]===undefined);if(L.length)st.hint=pick(L);else c=this.CARDS[0]}
   st.ev=c?{id:c.id,t:c.t,d:c.d}:null;if(c){st.log.unshift('بطاقة المفاجأة: '+c.t);setTimeout(()=>this.showCard(c),this.disp?0:950)}},
- showCard(c){const o=document.createElement('div');o.className='mg-card';o.innerHTML='<div class="mg-card-in"><small>بطاقة المفاجأة</small><b>'+c.t+'</b><p>'+c.d+'</p>'+(this.disp?'':'<button>انطلق</button>')+'</div>';document.body.appendChild(o);
+ showCard(c){const o=document.createElement('div');o.className='mg-card'+(c.k?' tc':'');o.innerHTML='<div class="mg-card-in"><small>'+(c.k||'بطاقة المفاجأة')+'</small><b>'+c.t+'</b><p>'+c.d+'</p>'+(this.disp?'':'<button>انطلق</button>')+'</div>';document.body.appendChild(o);
   FX.tone(392,.15);setTimeout(()=>FX.tone(523,.15),140);setTimeout(()=>FX.tone(784,.3),280);const close=()=>{o.classList.add('out');setTimeout(()=>o.remove(),400)};o.onclick=close;setTimeout(close,this.disp?4500:9000)},
+
+ // ===== بطاقات المجموعات: لكل مجموعة واحدة من كل نوع في اللعبة
+ PCS:[{id:'stop',n:'قِف',t:'قِف',tg:1,d:'يضيع على المجموعة المختارة دورها القادم.'},{id:'rev',n:'اعكس',t:'اعكس',tg:0,d:'ينقلب ترتيب الأدوار.'},{id:'c5',n:'تحدٍّ ٥',t:'تحدٍّ ٥',tg:1,v:5,d:'سؤال متوسط للمجموعة المختارة: إن أخطأت خُصم منها ٥، وإن أصابت خُصم ٥ ممن رمى البطاقة.'},{id:'c10',n:'تحدٍّ ١٠',t:'تحدٍّ ١٠',tg:1,v:10,d:'سؤال صعب للمجموعة المختارة: إن أخطأت خُصم منها ١٠، وإن أصابت خُصم ١٠ ممن رمى البطاقة.'}],
+ pcOf(k){const st=this.st;st.pc=st.pc||{};st.pc[k]=st.pc[k]||{stop:1,rev:1,c5:1,c10:1};return st.pc[k]},
+ nxt(t,step){const K=this.gs().length,d=this.st.dir||1;return((t+d*(step||1))%K+K)%K},
+ announce(c,txt){const st=this.st;st.pcfx={id:c.id,t:c.t,d:txt,k:'بطاقة '+this.short(this.gs()[st.turn]),at:Date.now()};this.showCard(st.pcfx)},
+ playCard(id,to){const st=this.st,gs=this.gs(),K=gs.length,me=st.turn,c=this.PCS.find(x=>x.id===id),H=this.pcOf(me);if(st.phase!=='pick'||!H[id])return;
+  if(c.tg&&(to===undefined||to===me))return;H[id]=0;this.cardSel=null;const A=this.short(gs[me]),B=to!==undefined?this.short(gs[to]):'';
+  if(id==='stop'){st.skip=st.skip||{};st.skip[to]=1;st.log.unshift(A+' رمى «قِف» على '+B+'، فيضيع عليه دوره القادم');this.announce(c,B+' يضيع عليه دوره القادم')}
+  else if(id==='rev'){if(K<=2){st.again=1;st.log.unshift(A+' رمى «اعكس»، فله دور إضافي بعد دوره هذا');this.announce(c,A+' يلعب دورين متتاليين')}else{st.dir=-(st.dir||1);st.log.unshift(A+' رمى «اعكس»، فانقلب ترتيب الأدوار');this.announce(c,'انقلب ترتيب الأدوار')}}
+  else{const js=[];for(let j=st.j1;j<=st.j2;j++)js.push(j);const q=QZ.juzQ(pick(js),c.v===5?2:3);q.opts=shuffle([q.ans,...q.ch]);
+   Object.assign(st,{duel:{from:me,to,v:c.v,id},q,phase:'duel',t0:Date.now(),frozen:0,extra:0,yq:0,sel:null});st.log.unshift(A+' رمى «'+c.t+'» على '+B);this.announce(c,B+' يُسأل الآن: إن أخطأ خُصم منه '+AR(c.v)+'، وإن أصاب خُصمت من '+A)}
+  FX.tone(330,.12);setTimeout(()=>FX.tone(660,.2),120);this.save();this.render()},
+ duelAns(i,b){const st=this.st,gs=this.gs(),q=st.q,D=st.duel;clearInterval(this.timer);const good=i>=0&&q.opts[i]===q.ans,loser=good?D.from:D.to,cut=Math.min(D.v,Math.max(0,this.score(loser)));
+  st.bonus[loser]=(st.bonus[loser]||0)-cut;good?FX.ok(b):FX.bad(b);
+  st.log.unshift(good?this.short(gs[D.to])+' أصاب في التحدي، فرجع الخصم على '+this.short(gs[D.from])+' (−'+AR(cut)+')':this.short(gs[D.to])+' أخطأ في التحدي (−'+AR(cut)+'). '+q.refTxt);
+  setTimeout(()=>CEL(good?'نجا '+this.short(gs[D.to]):'خُصم من '+this.short(gs[D.to]),good?'ورجع الخصم على '+this.short(gs[D.from])+' · −'+AR(cut):'−'+AR(cut)+' نقاط'),500);
+  Object.assign(st,{duel:null,q:null,phase:'pick'});this.save();setTimeout(()=>this.render(),900)},
  short(g){return String(g).replace(/^مجموعة\s+/,'')},
  own(k){const st=this.st;let n=0;for(const p in st.owner)if(st.owner[p]===k)n++;return n},
  render(){const st=this.st,el=P.mapg,gs=this.gs(),esc=ROS.esc;clearInterval(this.timer);
   if(!st.active){const o=(n,a,b)=>[...Array(b-a+1)].map((_,i)=>'<option'+(i+a===n?' selected':'')+' value="'+(i+a)+'">'+AR(i+a)+'</option>').join(''),dif=store.get('mapg_diff')||0,rd=store.get('mapg_rounds')||0;
    el.innerHTML='<h2>خريطة المصحف</h2>'+ARC.html('mapg')+'<p class="how">عمّروا خانات الأجزاء بالإجابات الصحيحة. لكل جزء قيمة، وفي كل جزء كنوز مخفية، ومن ملك أكثر فاز.</p>'+
-   '<details class="mg-rules"><summary>قواعد اللعبة</summary><ul><li>في دور كل فريق يختار خانة، فيأتيه سؤال من جزئها.</li><li>إن أخطأ انتقل السؤال إلى الفريق التالي ليسرقها.</li><li>يستطيع الفريق أن ينتزع خانة غيره بسؤال صعب.</li><li>الأجزاء ٣٠ و٢٩ و٢٨ الخانة فيها بنقطة، ثم كل جزأين يزيدان نقطة.</li><li>في كل جزء كنزان مخفيّان (وفي أعلى جزء ٣)، والكنز يجعل الخانة بثلاثة أضعافها.</li><li>من عمّر جزءًا كاملًا «ختمه» فصار ذهبيًّا لا يُنتزع، وأخذ قيمة ٥ خانات.</li><li>ثلاث إجابات صحيحة متتالية للفريق «سلسلة» لها مكافأة.</li><li>«تحدّي اليقين»: إن أصاب الفريق أخذ معها خانة مجاورة، وإن أخطأ ذهبت الخانة للفريق التالي.</li></ul></details>'+
+   '<details class="mg-rules"><summary>قواعد اللعبة</summary><ul><li>في دور كل فريق يختار خانة، فيأتيه سؤال من جزئها.</li><li>إن أخطأ انتقل السؤال إلى الفريق التالي ليسرقها.</li><li>يستطيع الفريق أن ينتزع خانة غيره بسؤال صعب.</li><li>الأجزاء ٣٠ و٢٩ و٢٨ الخانة فيها بنقطة، ثم كل جزأين يزيدان نقطة.</li><li>في كل جزء كنزان مخفيّان (وفي أعلى جزء ٣)، والكنز يجعل الخانة بثلاثة أضعافها.</li><li>من عمّر جزءًا كاملًا «ختمه» فصار ذهبيًّا لا يُنتزع، وأخذ قيمة ٥ خانات.</li><li>ثلاث إجابات صحيحة متتالية للفريق «سلسلة» لها مكافأة.</li><li>«تحدّي اليقين»: إن أصاب الفريق أخذ معها خانة مجاورة، وإن أخطأ ذهبت الخانة للفريق التالي.</li><li>لكل مجموعة أربع بطاقات، كل واحدة مرة واحدة في اللعبة، تُرمى في بداية الدور قبل اختيار الخانة: «قِف» يضيّع على مجموعة دورها، و«اعكس» يقلب ترتيب الأدوار (ومع مجموعتين يعطي دورًا إضافيًّا)، و«تحدٍّ ٥» و«تحدٍّ ١٠» سؤال للمجموعة المختارة: إن أخطأت خُصم منها، وإن أصابت رجع الخصم على من رماها. ولا تنزل النقاط تحت الصفر.</li></ul></details>'+
    '<div class="step"><b>١</b> الفرق</div>'+COMP.kpick()+
    '<div class="step"><b>٢</b> الأجزاء</div><div class="qt-row">من الجزء <select id="mg-j1">'+o(st.j1||29,1,30)+'</select> إلى الجزء <select id="mg-j2">'+o(st.j2||30,1,30)+'</select></div>'+
    '<div class="step"><b>٣</b> مستوى الأسئلة</div><div class="chips">'+[[0,'تلقائي'],[1,'سهل'],[2,'متوسط'],[3,'صعب']].map(([v,n])=>'<button class="chip'+(dif===v?' ok':'')+'" data-mgd="'+v+'">'+n+'</button>').join('')+'</div>'+
@@ -1551,18 +1595,23 @@ const MAPG={st:null,timer:null,
    el.querySelectorAll('[data-mgd]').forEach(b=>b.onclick=()=>{store.set('mapg_diff',+b.dataset.mgd);FX.tick();this.render()});
    el.querySelectorAll('[data-mgr]').forEach(b=>b.onclick=()=>{store.set('mapg_rounds',+b.dataset.mgr);FX.tick();this.render()});
    $('mg-go').onclick=()=>{const j1=+$('mg-j1').value,j2=Math.max(j1,+$('mg-j2').value);Object.assign(st,this.def(),{active:true,j1,j2,sec:+$('mg-s').value,diff:store.get('mapg_diff')||0,rounds:store.get('mapg_rounds')||0});this.seedTreasure();this.newRound();this.save();FX.tone(523,.15);setTimeout(()=>FX.tone(784,.25),140);this.render();el.scrollIntoView({behavior:'smooth',block:'start'})};return}
-  const P_=this.pages(),tot=P_.length,K=gs.length,rnd0=Math.floor((st.turns||0)/K)+1,ask=st.phase==='ask'||st.phase==='steal';
+  const P_=this.pages(),tot=P_.length,K=gs.length,rnd0=Math.floor((st.turns||0)/K)+1,ask=st.phase==='ask'||st.phase==='steal'||st.phase==='duel',duel=st.phase==='duel';
   // شريط النقاط الثابت
-  let h='<div class="mg-bar">'+gs.map((g,k)=>{const pc=Math.round(this.own(k)/tot*100),sk=(st.streak||{})[k]||0;return'<div class="mg-tm'+(k===(st.phase==='steal'?st.stealer:st.turn)?' on':'')+'" style="--c:'+GC[k]+'"><span>'+esc(this.short(g))+'</span><b>'+AR(this.score(k))+'</b><u><i style="width:'+pc+'%"></i></u>'+(sk>=2?'<em>سلسلة '+AR(sk)+'</em>':'')+'</div>'}).join('')+'</div>';
-  h+='<div class="mg-info">'+(st.ev?'<span class="mg-ev" title="'+st.ev.d+'">'+st.ev.t+'</span>':'')+(st.rounds?'<span>الجولة '+AR(Math.min(rnd0,st.rounds))+' من '+AR(st.rounds)+'</span>':'<span>جولة '+AR(rnd0)+'</span>')+(st.log[0]?'<span class="mg-news" key="'+st.log.length+'">'+esc(st.log[0]).replace(/&lt;[^&]*&gt;/g,'')+'</span>':'')+'</div>';
+  let h='<div class="mg-bar">'+gs.map((g,k)=>{const pc=Math.round(this.own(k)/tot*100),sk=(st.streak||{})[k]||0;return'<div class="mg-tm'+(k===(st.phase==='steal'?st.stealer:st.turn)?' on':'')+'" style="--c:'+GC[k]+'"><span>'+esc(this.short(g))+'</span><b>'+AR(this.score(k))+'</b><u><i style="width:'+pc+'%"></i></u>'+(sk>=2?'<em>سلسلة '+AR(sk)+'</em>':'')+'<div class="mg-pcs">'+this.PCS.map(c=>'<i class="p-'+c.id+(this.pcOf(k)[c.id]?'':' used')+'" title="'+c.t+'">'+c.n+'</i>').join('')+'</div></div>'}).join('')+'</div>';
+  h+='<div class="mg-info">'+(st.ev?'<span class="mg-ev" title="'+st.ev.d+'">'+st.ev.t+'</span>':'')+((st.dir||1)<0?'<span class="mg-rev">الأدوار معكوسة</span>':'')+(st.skip&&Object.keys(st.skip).length?'<span>«قِف» على '+Object.keys(st.skip).map(k=>esc(this.short(gs[k]))).join('، ')+'</span>':'')+(st.rounds?'<span>الجولة '+AR(Math.min(rnd0,st.rounds))+' من '+AR(st.rounds)+'</span>':'<span>جولة '+AR(rnd0)+'</span>')+(st.log[0]?'<span class="mg-news" key="'+st.log.length+'">'+esc(st.log[0]).replace(/&lt;[^&]*&gt;/g,'')+'</span>':'')+'</div>';
   // السؤال فوق اللوحة
-  if(ask){const q=st.q,who=st.phase==='steal'?st.stealer:st.turn,H=this.helps(who),j=this.juzOf(st.sel);
+  if(duel){const q=st.q,D=st.duel,c=this.PCS.find(x=>x.id===D.id);
+   h+='<div class="mg-q duel" style="--c:'+GC[D.to]+'"><div class="mg-qh"><span class="mg-who">'+c.t+': '+esc(this.short(gs[D.from]))+' ← '+esc(this.short(gs[D.to]))+'</span><span class="mg-pl">إن أخطأ خُصم منه '+AR(D.v)+' · وإن أصاب خُصم '+AR(D.v)+' من '+esc(this.short(gs[D.from]))+'</span><span class="qsec" id="mg-sec"></span></div>'+
+    '<div class="mg-kind">'+(q.kn||'')+'</div><div class="qask">'+q.ask+'</div>'+(q.ayah?'<div class="ayah">'+q.ayah+'</div>':'')+'<div class="qchoices">'+q.opts.map((o,i)=>'<button class="qc'+(q.ay?' ay':'')+'" data-i="'+i+'">'+o+'</button>').join('')+'</div>'+QREP.btn('mg-rep')+'</div>'}
+  else if(ask){const q=st.q,who=st.phase==='steal'?st.stealer:st.turn,H=this.helps(who),j=this.juzOf(st.sel);
    h+='<div class="mg-q" style="--c:'+GC[who]+'"><div class="mg-qh"><span class="mg-who">'+(st.phase==='steal'?'فرصة سرقة لـ ':'')+esc(this.short(gs[who]))+'</span><span class="mg-pl">'+this.lab(st.sel)+' · بـ'+this.pts(this.val(j))+'</span><span class="qsec" id="mg-sec"></span></div>'+
     '<div class="mg-kind">'+(q.kn||'')+'</div><div class="qask">'+q.ask+'</div>'+(q.ayah?'<div class="ayah">'+q.ayah+'</div>':'')+
     (st.yq&&st.phase==='ask'?'<div class="mg-dispnote">تحدّي اليقين: يجيبون من حفظهم دون خيارات</div><div class="mg-key"><small>الجواب الصحيح (يجيب الطالب من حفظه، ثم احكم أنت)</small><div class="mg-ans'+(q.ay?' ay':'')+'">'+q.ans+'</div></div><div class="mg-judge"><button class="ok" id="mg-ok">أصاب</button><button class="no" id="mg-no">أخطأ</button></div>':'<div class="qchoices">'+q.opts.map((o,i)=>(q.gone&&q.gone.includes(i)?'':'<button class="qc'+(q.ay?' ay':'')+'" data-i="'+i+'">'+o+'</button>')).join('')+'</div>')+
     (st.phase==='ask'&&K>1?(st.yq?'<div class="mg-yq on">تحدّي اليقين: إن أصابوا أخذوا معها خانة مجاورة، وإن أخطؤوا ذهبت الخانة إلى الفريق التالي</div>':'<button class="mg-yq" id="mg-yq">«تحدّي اليقين»: يجيبون من حفظهم دون خيارات</button>'):'')+
     '<div class="mg-help">'+[['del','حذف خيارين'],['frz','إيقاف الوقت'],['more','مهلة ٣٠ ث']].filter(([k])=>!(k==='del'&&st.yq&&st.phase==='ask')).map(([k,n])=>'<button data-h="'+k+'"'+(H[k]?'':' disabled')+'>'+n+'</button>').join('')+'</div>'+QREP.btn('mg-rep')+'</div>'}
-  else h+='<div class="mg-turn" style="--c:'+GC[st.turn]+'"><small>الدور على</small><b>'+esc(this.short(gs[st.turn]))+'</b><span>اختر خانة من اللوحة</span></div>';
+  else{const H=this.pcOf(st.turn),cs=this.cardSel&&this.PCS.find(x=>x.id===this.cardSel);h+='<div class="mg-turn" style="--c:'+GC[st.turn]+'"><small>الدور على</small><b>'+esc(this.short(gs[st.turn]))+'</b><span>اختر خانة من اللوحة</span>'+
+   (K>1?'<div class="mg-hand"><small>بطاقاتكم (كل بطاقة مرة واحدة في اللعبة):</small>'+this.PCS.map(c=>'<button class="pc-'+c.id+(this.cardSel===c.id?' on':'')+'" data-pc="'+c.id+'"'+(H[c.id]?'':' disabled')+' title="'+c.d+'">'+c.n+'</button>').join('')+'</div>'+
+   (cs?'<div class="mg-tg"><small>'+cs.d+'<br>على أي مجموعة؟</small>'+gs.map((g,k)=>k===st.turn?'':'<button data-tg="'+k+'" style="--c:'+GC[k]+'">'+esc(this.short(g))+'</button>').join('')+'<button class="x" data-tg="-1">إلغاء</button></div>':''):'')+'</div>'}
   // اللوحة
   const fx=st.fx&&Date.now()-st.fx.at<1600?st.fx:null;let cur=0;
   h+='<div class="mg-board'+(ask?' dim':'')+'">';P_.forEach(p=>{const j=this.juzOf(p);if(j!==cur){if(cur)h+='</div></div>';cur=j;const L=P_.filter(x=>this.juzOf(x)===j);
@@ -1576,6 +1625,8 @@ const MAPG={st:null,timer:null,
   if(st.log.length)h+='<details class="mg-log"><summary>سجل اللعبة ('+AR(st.log.length)+')</summary><ul class="rlog">'+st.log.slice(0,15).map(l=>'<li>'+l+'</li>').join('')+'</ul></details>';
   el.innerHTML=h;
   el.querySelectorAll('.mg-c').forEach(b=>b.onclick=()=>this.pick(+b.dataset.p));
+  el.querySelectorAll('[data-pc]').forEach(b=>b.onclick=()=>{const c=this.PCS.find(x=>x.id===b.dataset.pc);if(!c.tg){if(confirm('رمي بطاقة «'+c.t+'»؟'))this.playCard(c.id);return}this.cardSel=this.cardSel===c.id?null:c.id;FX.tick();this.render()});
+  el.querySelectorAll('[data-tg]').forEach(b=>b.onclick=()=>{const t=+b.dataset.tg;if(t<0){this.cardSel=null;this.render();return}this.playCard(this.cardSel,t)});
   el.querySelectorAll('.qc[data-i]').forEach(b=>b.onclick=()=>this.answer(+b.dataset.i,b));
   el.querySelectorAll('.mg-help button').forEach(b=>b.onclick=()=>this.useHelp(b.dataset.h));
   QREP.bind('mg-rep',()=>st.q);
@@ -1601,17 +1652,18 @@ const MAPG={st:null,timer:null,
   if(ow===st.turn){FX.bad(null);return}if(st.done[j]!==undefined){FX.bad(null);return}if(ow!==undefined&&st.shield&&st.shield[p]){FX.bad(null);st.log.unshift('هذه الخانة محميّة بالدرع، اختر غيرها');this.render();return}
   const d=st.diff?st.diff:ow!==undefined?(st.ev&&st.ev.id==='raid'?2:3):this.adj(p,st.turn)?2:3;const q=QZ.juzQ(j,d);q.opts=shuffle([q.ans,...q.ch]);
   Object.assign(st,{sel:p,q,phase:'ask',t0:Date.now(),stealer:null,frozen:0,extra:0,yq:0});this.save();FX.tone(700,.08);this.render();P.mapg.scrollIntoView({behavior:'smooth',block:'start'})},
- answer(i,b){const st=this.st,gs=this.gs(),q=st.q;if(!q)return;clearInterval(this.timer);const who=st.phase==='steal'?st.stealer:st.turn;const good=i>=0&&q.opts[i]===q.ans;st.streak=st.streak||{};
+ answer(i,b){const st=this.st,gs=this.gs(),q=st.q;if(!q)return;if(st.phase==='duel')return this.duelAns(i,b);clearInterval(this.timer);const who=st.phase==='steal'?st.stealer:st.turn;const good=i>=0&&q.opts[i]===q.ans;st.streak=st.streak||{};
   if(good){const ev=st.ev&&st.ev.id,vv=this.val(this.juzOf(st.sel));let eb=0;if(ev==='dbl'||ev==='final')eb+=vv;if(ev==='speed')eb+=1;if(eb)st.bonus[who]=(st.bonus[who]||0)+eb;if(ev==='shield'){st.shield=st.shield||{};st.shield[st.sel]=1}if(st.hint===st.sel)st.hint=null;
    const v0=vv*(st.tr[st.sel]===1?3:1)+eb;st.fx={p:st.sel,t:'+'+AR(v0),at:Date.now()};st.streak[who]=(st.streak[who]||0)+1;try{LEAGUE.stat(gs[who],'streak',st.streak[who],'max')}catch(e){}if(st.streak[who]%3===0){const bn=2*this.val(this.juzOf(st.sel));st.bonus[who]=(st.bonus[who]||0)+bn;st.log.unshift('سلسلة! '+gs[who]+' أجاب '+AR(st.streak[who])+' إجابات صحيحة متتالية (+'+AR(bn)+')');setTimeout(()=>CEL('سلسلة '+AR(st.streak[who]),this.short(gs[who])+' · مكافأة +'+AR(bn)),1300)}}else st.streak[who]=0;
   if(good){const prev=st.owner[st.sel];st.owner[st.sel]=who;st.last=st.sel;FX.ok(b);if(st.tr[st.sel]===1){st.tr[st.sel]=2;try{LEAGUE.stat(gs[who],'tr',1)}catch(e){}const tv=this.val(this.juzOf(st.sel));st.bonus[who]=(st.bonus[who]||0)+2*tv;st.log.unshift('كنز! وجد '+gs[who]+' كنزًا في '+this.lab(st.sel)+' فصارت بـ'+this.pts(3*tv));setTimeout(()=>CEL('كنز!',gs[who]+' وجد كنزًا · الخانة بـ'+this.pts(3*tv)),250)}st.log.unshift(gs[who]+(prev!==undefined&&prev!==who?' انتزع '+this.lab(st.sel)+' من '+gs[prev]:' عمّر '+this.lab(st.sel)+' (+'+AR(this.val(this.juzOf(st.sel)))+')'));
    const j=this.juzOf(st.sel),all=this.pages().filter(p=>this.juzOf(p)===j);if(all.every(p=>st.owner[p]===who)){st.done[j]=who;try{LEAGUE.stat(gs[who],'seal',1)}catch(e){}st.log.unshift('ختم '+gs[who]+' الجزء '+AR(j)+' (+'+AR(5*this.val(j))+')');setTimeout(()=>CEL('ختم الجزء '+AR(j),gs[who]+' · +'+AR(5*this.val(j))+' وصار الجزء ذهبيًّا'),900)}
    if(st.yq&&st.phase==='ask'){const nb=[st.sel+1,st.sel-1].find(p=>this.pages().includes(p)&&st.owner[p]===undefined&&st.done[this.juzOf(p)]===undefined);if(nb){st.owner[nb]=who;if(st.tr[nb]===1){st.tr[nb]=2;st.bonus[who]=(st.bonus[who]||0)+2*this.val(this.juzOf(nb))}st.log.unshift('بيقينه عمّر '+gs[who]+' معها '+this.lab(nb))}}
    this.next()}
-  else if(st.yq&&st.phase==='ask'&&gs.length>1){FX.bad(b);const nx=(st.turn+1)%gs.length;if(st.done[this.juzOf(st.sel)]===undefined){st.owner[st.sel]=nx;st.last=st.sel}st.log.unshift(gs[who]+' أخطأ في تحدّي اليقين، فانتقلت '+this.lab(st.sel)+' إلى '+gs[nx]);this.next()}
-  else{FX.bad(b);const k=gs.length;if(st.phase==='ask'&&k>1){st.phase='steal';st.stealer=(st.turn+1)%k;st.t0=Date.now();st.frozen=0;st.extra=0;q.gone=null;st.log.unshift(gs[who]+' أخطأ في '+this.lab(st.sel)+'، والفرصة لـ '+gs[st.stealer]);this.save();setTimeout(()=>this.render(),700);return}
+  else if(st.yq&&st.phase==='ask'&&gs.length>1){FX.bad(b);const nx=this.nxt(st.turn);if(st.done[this.juzOf(st.sel)]===undefined){st.owner[st.sel]=nx;st.last=st.sel}st.log.unshift(gs[who]+' أخطأ في تحدّي اليقين، فانتقلت '+this.lab(st.sel)+' إلى '+gs[nx]);this.next()}
+  else{FX.bad(b);const k=gs.length;if(st.phase==='ask'&&k>1){st.phase='steal';st.stealer=this.nxt(st.turn);st.t0=Date.now();st.frozen=0;st.extra=0;q.gone=null;st.log.unshift(gs[who]+' أخطأ في '+this.lab(st.sel)+'، والفرصة لـ '+gs[st.stealer]);this.save();setTimeout(()=>this.render(),700);return}
    st.log.unshift('لم تُعمَّر '+this.lab(st.sel)+'. '+q.refTxt);this.next()}},
- next(){const st=this.st,K=this.gs().length;st.turn=(st.turn+1)%K;st.turns=(st.turns||0)+1;if(st.turns%K===0&&!(st.rounds&&st.turns>=st.rounds*K))this.newRound();st.phase='pick';st.q=null;st.sel=null;this.save();setTimeout(()=>this.render(),900);
+ next(){const st=this.st,K=this.gs().length,gs=this.gs(),tick=()=>{st.turns=(st.turns||0)+1;if(st.turns%K===0&&!(st.rounds&&st.turns>=st.rounds*K))this.newRound()};
+  if(st.again){st.again=0;tick()}else{st.turn=this.nxt(st.turn);tick();let g=0;while(st.skip&&st.skip[st.turn]&&g++<K&&!(st.rounds&&st.turns>=st.rounds*K)){delete st.skip[st.turn];st.log.unshift('فات الدور على '+this.short(gs[st.turn])+' بسبب «قِف»');st.turn=this.nxt(st.turn);tick()}}st.phase='pick';st.q=null;st.sel=null;this.save();setTimeout(()=>this.render(),900);
   const all=this.pages().every(p=>st.owner[p]!==undefined),over=st.rounds&&st.turns>=st.rounds*K;
   if(all||over){const gs=this.gs();st.log.unshift(all?'عُمّرت الخريطة كلها':'انتهت الجولات');this.save();const ps=gs.map((_,k)=>this.score(k));store.set('mapg_reveal',{gs,ps,t:'خريطة المصحف',at:Date.now()});setTimeout(()=>COMP.reveal(gs,ps,'خريطة المصحف'),1100)}}
 };
@@ -1923,10 +1975,10 @@ const LEAGUE={el:null,
 LEAGUE.init();
 // ===== تشغيل شاشة العرض (نافذة للطلاب تتبع نافذة المشرف لحظة بلحظة)
 {const _r=MAPG.render;MAPG.render=function(){_r.apply(this,arguments);if(!this.disp&&this.st&&this.st.active)try{this.save()}catch(e){}}}
-(()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
+(()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};MAPG.playCard=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
   const load=()=>{const v=store.get('mapg');if(v)MAPG.st=Object.assign(MAPG.def(),v)};load();show('mapg');MAPG.render();document.title='ميدان التركيز · شاشة العرض';
   let lastEv=JSON.stringify(MAPG.st.ev||null);
-  addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
+  let lastPc=JSON.stringify(MAPG.st.pcfx||null);addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const pc=JSON.stringify(MAPG.st.pcfx||null);if(pc!==lastPc&&MAPG.st.pcfx)MAPG.showCard(MAPG.st.pcfx);lastPc=pc;const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
   addEventListener('storage',e=>{if(e.key==='tz2_mapg_reveal'&&e.newValue){const r=JSON.parse(e.newValue);COMP.reveal(r.gs,r.ps,r.t)}})};
  if(document.readyState==='complete')setTimeout(go,50);else addEventListener('load',()=>setTimeout(go,50))})();
 
