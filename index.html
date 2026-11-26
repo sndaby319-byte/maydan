@@ -1194,6 +1194,28 @@ body.has-dash:not(.inpanel) .dk-nav{padding-inline:max(14px,env(safe-area-inset-
 .dk-th .cv.cv2 b{font-size:17px!important}.dk-th .cv.cv2 b span{-webkit-text-stroke:4px var(--ex);text-shadow:1px 1px 0 var(--ex),2px 2px 0 var(--ex),3px 3px 0 var(--ex)}
 .cv.cv2 svg text{transform-box:fill-box}
 #buddy,#bubble{display:none!important}
+
+/* ===== ضربة السكين */
+.cut-ov{position:fixed;inset:0;z-index:75;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vmin;background:rgba(8,10,20,.82);backdrop-filter:blur(5px);animation:aidIn .2s;font-family:var(--body)}
+.cut-ov.out{opacity:0;transition:opacity .3s}
+.cut-wrap{position:relative;width:min(84vw,620px);height:min(34vw,240px)}
+.cut-h{position:absolute;inset:0}
+.cut-h.a{clip-path:polygon(0 0,100% 0,100% 34%,0 70%)}.cut-h.b{clip-path:polygon(0 70%,100% 34%,100% 100%,0 100%)}
+.cut-card{position:absolute;inset:0;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,color-mix(in srgb,var(--tc) 78%,#fff),var(--tc));border:4px solid #141414;box-shadow:0 10px 0 #141414;color:#fff;animation:cutIn .35s cubic-bezier(.3,1.5,.5,1) both}
+.cut-card small{font-weight:800;font-size:clamp(14px,2.6vw,22px);opacity:.85}
+.cut-card b{font-family:var(--display);font-size:clamp(30px,7.5vw,64px);line-height:1.1;-webkit-text-stroke:5px #141414;paint-order:stroke fill;text-shadow:3px 4px 0 #141414}
+@keyframes cutIn{from{transform:scale(.5) rotate(-6deg);opacity:0}to{transform:none;opacity:1}}
+.cut-h.a{animation:cutA .5s .62s cubic-bezier(.2,.8,.3,1) both}.cut-h.b{animation:cutB .5s .62s cubic-bezier(.2,.8,.3,1) both}
+@keyframes cutA{to{transform:translate(-3%,-9%) rotate(-3deg)}}@keyframes cutB{to{transform:translate(3%,9%) rotate(3deg)}}
+.cut-blade{position:absolute;left:-30%;top:50%;width:60%;margin-top:-6%;transform:rotate(-20deg);opacity:0;z-index:3;animation:blade .38s .3s cubic-bezier(.6,0,.4,1) both;filter:drop-shadow(0 6px 10px rgba(0,0,0,.6))}
+.cut-blade svg{width:100%;display:block}
+@keyframes blade{0%{opacity:1;transform:translate(-40%,30%) rotate(-20deg)}100%{opacity:0;transform:translate(220%,-75%) rotate(-20deg)}}
+.cut-line{position:absolute;left:-4%;right:-4%;top:52%;height:6px;border-radius:6px;background:linear-gradient(90deg,transparent,#fff 20%,#FF4B3A 50%,#fff 80%,transparent);transform:rotate(-20deg) scaleX(0);transform-origin:left;box-shadow:0 0 20px 6px rgba(255,75,58,.8);z-index:2;animation:cutL .5s .4s ease-out both}
+@keyframes cutL{0%{transform:rotate(-20deg) scaleX(0);opacity:1}50%{transform:rotate(-20deg) scaleX(1);opacity:1}100%{transform:rotate(-20deg) scaleX(1);opacity:0}}
+.cut-v{font-family:var(--display);font-size:clamp(64px,16vw,150px);line-height:1;color:#FF4B3A;-webkit-text-stroke:6px #141414;paint-order:stroke fill;text-shadow:5px 6px 0 #141414,0 0 40px rgba(255,75,58,.6);animation:cutV .5s .75s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes cutV{from{transform:scale(0) rotate(-12deg)}to{transform:rotate(-4deg)}}
+.cut-t{text-align:center;color:#fff;font-weight:900;font-size:clamp(20px,3.6vw,34px);animation:tcFade .4s 1s both;opacity:0}.cut-t small{display:block;font-weight:700;font-size:.6em;color:rgba(255,255,255,.75)}
+@media (prefers-reduced-motion:reduce){.cut-ov *{animation-duration:.01s!important;animation-delay:0s!important}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1860,10 +1882,18 @@ const MAPG={st:null,timer:null,
   if(A.who===null){st.log.unshift('لم يزايد أحد، فالسؤال لـ '+gs[st.turn]+' كخانة عادية');Object.assign(st,{phase:'ask',wait:1,au:null,auc:null});this.save();this.render();return}
   const w=A.who,v=A.hi;st.bonus[w]=(st.bonus[w]||0)-v;st.abid={who:w,v};st.log.unshift('بِيع! المزاد لـ '+gs[w]+' بـ'+this.pts(v));Object.assign(st,{phase:'ask',wait:1,au:null,auc:null});
   FX.tone(150,.15);setTimeout(()=>FX.tone(150,.15),350);setTimeout(()=>{FX.tone(110,.3);FX.buzz&&FX.buzz([60])},700);setTimeout(()=>CEL('بِيع!',this.short(gs[w])+' بـ'+this.pts(v)+' · إن أصاب ربح '+AR(2*v)),720);this.save();setTimeout(()=>this.render(),900)},
+
+ // ===== ضربة السكين عند الخصم
+ slash(k,v,why){if(!v)return;const st=this.st;st.cut={n:this.short(this.gs()[k]),c:GC[k],v:Math.abs(v),why:why||'',at:Date.now()};this.showCut(st.cut)},
+ showCut(c){document.querySelectorAll('.cut-ov').forEach(x=>x.remove());const e=x=>String(x).replace(/</g,'&lt;');const o=document.createElement('div');o.className='cut-ov';o.dir='rtl';
+  const card='<div class="cut-card" style="--tc:'+c.c+'"><small>مجموعة</small><b>'+e(c.n)+'</b></div>';
+  o.innerHTML='<div class="cut-wrap"><div class="cut-h a">'+card+'</div><div class="cut-h b">'+card+'</div><i class="cut-blade"><svg viewBox="0 0 240 40"><path d="M6 20L176 6h50a8 8 0 0 1 0 28h-50z" fill="#E8EDF5" stroke="#141414" stroke-width="3" stroke-linejoin="round"/><path d="M176 6h50a8 8 0 0 1 0 28h-50z" fill="#7A3A0A" stroke="#141414" stroke-width="3"/><path d="M20 19L170 10" stroke="#fff" stroke-width="2" opacity=".8"/></svg></i><i class="cut-line"></i></div><div class="cut-v">−'+AR(c.v)+'</div><div class="cut-t">خصم '+this.pts(c.v)+(c.why?'<small>'+e(c.why)+'</small>':'')+'</div>';
+  document.body.appendChild(o);FX.tone(1400,.05);setTimeout(()=>{FX.tone(180,.18);FX.buzz&&FX.buzz([50,30,50])},520);setTimeout(()=>FX.tone(140,.3),700);
+  const close=()=>{o.classList.add('out');setTimeout(()=>o.remove(),350)};o.onclick=close;setTimeout(close,this.disp?3600:3000)},
  duelAns(i,b){const st=this.st,gs=this.gs(),q=st.q,D=st.duel;clearInterval(this.timer);const good=i>=0&&q.opts[i]===q.ans,loser=good?D.from:D.to,cut=Math.min(D.v,Math.max(0,this.score(loser)));
-  st.bonus[loser]=(st.bonus[loser]||0)-cut;good?FX.ok(b):FX.bad(b);
+  st.bonus[loser]=(st.bonus[loser]||0)-cut;good?FX.ok(b):FX.bad(b);if(cut)setTimeout(()=>{this.slash(loser,cut,good?'رجع عليه خصم التحدّي':'أخطأ في التحدّي');this.save()},150);
   st.log.unshift(good?this.short(gs[D.to])+' أصاب في التحدي، فرجع الخصم على '+this.short(gs[D.from])+' (−'+AR(cut)+')':this.short(gs[D.to])+' أخطأ في التحدي (−'+AR(cut)+'). '+q.refTxt);
-  setTimeout(()=>CEL(good?'نجا '+this.short(gs[D.to]):'خُصم من '+this.short(gs[D.to]),good?'ورجع الخصم على '+this.short(gs[D.from])+' · −'+AR(cut):'−'+AR(cut)+' نقاط'),500);
+  
   Object.assign(st,{duel:null,q:null,phase:'pick'});this.save();setTimeout(()=>this.render(),900)},
  short(g){return String(g).replace(/^مجموعة\s+/,'')},
  own(k){const st=this.st;let n=0;for(const p in st.owner)if(st.owner[p]===k)n++;return n},
@@ -1936,7 +1966,7 @@ const MAPG={st:null,timer:null,
    $('mg-add').onclick=()=>{if(st.j2<30)st.j2++;else if(st.j1>1)st.j1--;this.seedTreasure();st.log.unshift('أُضيف إلى الخريطة جزء جديد');this.save();FX.ok(null,true);this.render()};
    $('mg-new').onclick=()=>{if(confirm('بدء خريطة جديدة؟ ستُحفظ الحالية في «ألعاب محفوظة» وتستطيع الرجوع إليها.'))this.park()};
    $('mg-drop').onclick=()=>{if(confirm('إنهاء اللعبة دون حفظ؟ لن تُحفظ نقاطها ولا مراحلها.')){st.active=false;this.tools=false;this.save();FX.tick();this.render()}};
-   el.querySelectorAll('[data-ded]').forEach(b=>b.onclick=()=>{const k=+b.dataset.ded,v=+b.dataset.v;st.bonus[k]=(st.bonus[k]||0)+v;st.log.unshift(v<0?'خُصم من '+gs[k]+' '+this.pts(-v):'أُعيدت إلى '+gs[k]+' نقطة');this.save();v<0?FX.bad(b):FX.tick();this.render()})}
+   el.querySelectorAll('[data-ded]').forEach(b=>b.onclick=()=>{const k=+b.dataset.ded,v=+b.dataset.v;st.bonus[k]=(st.bonus[k]||0)+v;st.log.unshift(v<0?'خُصم من '+gs[k]+' '+this.pts(-v):'أُعيدت إلى '+gs[k]+' نقطة');if(v<0)this.slash(k,v,'بقرار المشرف');this.save();v<0?FX.bad(b):FX.tick();this.render()})}
   if(fx)setTimeout(()=>{const e=el.querySelector('.mg-fx');e&&e.remove()},1700);
   el.querySelectorAll('[data-ab]').forEach(b=>b.onclick=()=>this.bid(+b.dataset.ab,+b.dataset.v));el.querySelectorAll('[data-ao]').forEach(b=>b.onclick=()=>this.aucOut(+b.dataset.ao));if($('au-sell'))$('au-sell').onclick=()=>this.sell();
   if(auct){const upd=()=>{const r=this.aucLeft();if($('au-t'))$('au-t').textContent=AR(r);if(r<=3&&r>0)FX.tick();if(r===0){clearInterval(this.timer);if(!this.disp)this.sell()}};upd();this.timer=setInterval(upd,1000)}
@@ -1959,7 +1989,7 @@ const MAPG={st:null,timer:null,
    const j=this.juzOf(st.sel),all=this.pages().filter(p=>this.juzOf(p)===j);if(all.every(p=>st.owner[p]===who)){st.done[j]=who;try{LEAGUE.stat(gs[who],'seal',1)}catch(e){}st.log.unshift('ختم '+gs[who]+' الجزء '+AR(j)+' (+'+AR(5*this.val(j))+')');setTimeout(()=>CEL('ختم الجزء '+AR(j),gs[who]+' · +'+AR(5*this.val(j))+' وصار الجزء ذهبيًّا'),900)}
    if(st.yq&&st.phase==='ask'){const nb=[st.sel+1,st.sel-1].find(p=>this.pages().includes(p)&&st.owner[p]===undefined&&st.done[this.juzOf(p)]===undefined);if(nb){st.owner[nb]=who;if(st.tr[nb]===1){st.tr[nb]=2;st.bonus[who]=(st.bonus[who]||0)+5}st.log.unshift('بيقينه عمّر '+gs[who]+' معها '+this.lab(nb))}}
    this.next()}
-  else if(st.abid){FX.bad(b);st.log.unshift(gs[who]+' خسر المزاد (−'+AR(st.abid.v)+'). '+q.refTxt);setTimeout(()=>CEL('خسر المزاد',this.short(gs[who])+' · −'+AR(st.abid.v)),300);st.abid=null;this.next()}
+  else if(st.abid){FX.bad(b);this.slash(who,st.abid.v,'خسر المزاد');st.log.unshift(gs[who]+' خسر المزاد (−'+AR(st.abid.v)+'). '+q.refTxt);st.abid=null;this.next()}
   else if(st.yq&&st.phase==='ask'&&gs.length>1){FX.bad(b);const nx=this.nxt(st.turn);if(st.done[this.juzOf(st.sel)]===undefined){st.owner[st.sel]=nx;st.last=st.sel}st.log.unshift(gs[who]+' أخطأ في تحدّي اليقين، فانتقلت '+this.lab(st.sel)+' إلى '+gs[nx]);this.next()}
   else{FX.bad(b);const k=gs.length;if(st.phase==='ask'&&k>1){st.phase='steal';st.stealer=this.nxt(st.turn);st.t0=Date.now();st.frozen=0;st.extra=0;q.gone=null;st.log.unshift(gs[who]+' أخطأ في '+this.lab(st.sel)+'، والفرصة لـ '+gs[st.stealer]);this.save();setTimeout(()=>this.render(),700);return}
    st.log.unshift('لم تُعمَّر '+this.lab(st.sel)+'. '+q.refTxt);this.next()}},
@@ -2344,7 +2374,7 @@ addEventListener('hashchange',()=>{if(location.hash==='#mapg-display'&&!document
 (()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};MAPG.playCard=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
   const load=()=>{const v=store.get('mapg');if(v)MAPG.st=Object.assign(MAPG.def(),v)};load();show('mapg');MAPG.render();document.title='ميدان التركيز · شاشة العرض';const bk=document.createElement('button');bk.className='disp-back';bk.type='button';bk.dir='rtl';bk.textContent='→ رجوع إلى التحكم';bk.onclick=()=>{let closed=false;if(window.opener&&!window.opener.closed){try{window.close();closed=window.closed}catch(e){}}setTimeout(()=>{if(!window.closed){location.replace(location.href.split('#')[0]+'#mapg');location.reload()}},150)};document.body.appendChild(bk);
   let lastEv=JSON.stringify(MAPG.st.ev||null);
-  let lastPc=JSON.stringify(MAPG.st.pcfx||null);addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const pc=JSON.stringify(MAPG.st.pcfx||null);if(pc!==lastPc&&MAPG.st.pcfx)MAPG.showCard(MAPG.st.pcfx);lastPc=pc;const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
+  let lastPc=JSON.stringify(MAPG.st.pcfx||null),lastCut=JSON.stringify(MAPG.st.cut||null);addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;const c=JSON.stringify((store.get('mapg')||{}).cut||null);if(c!==lastCut){lastCut=c;const v=(store.get('mapg')||{}).cut;if(v&&Date.now()-v.at<5000)MAPG.showCut(v)}});addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const pc=JSON.stringify(MAPG.st.pcfx||null);if(pc!==lastPc&&MAPG.st.pcfx)MAPG.showCard(MAPG.st.pcfx);lastPc=pc;const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
   addEventListener('storage',e=>{if(e.key==='tz2_mapg_reveal'&&e.newValue){const r=JSON.parse(e.newValue);COMP.reveal(r.gs,r.ps,r.t)}})};
  if(document.readyState==='complete')setTimeout(go,50);else addEventListener('load',()=>setTimeout(go,50))})();
 
