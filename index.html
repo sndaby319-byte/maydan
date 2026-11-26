@@ -1880,6 +1880,7 @@ const MAPG={st:null,timer:null,
  duelQ(d,kind){const st=this.st,js=[];for(let j=st.j1;j<=st.j2;j++)js.push(j);if(kind&&kind!=='any'){for(let r=0;r<3;r++)for(const j of shuffle(js.slice())){const q=QZ.juzQ(j,d,kind);if(q)return q}}return QZ.juzQ(pick(js),d)},
  pcOf(k){const st=this.st;st.pc=st.pc||{};st.pc[k]=st.pc[k]||{stop:1,rev:1,c5:1,c10:1};return st.pc[k]},
  nxt(t,step){const K=this.gs().length,d=this.st.dir||1;return((t+d*(step||1))%K+K)%K},
+ nxtFree(t){const K=this.gs().length,sk=this.st.skip||{};let n=this.nxt(t),g=0;while(sk[n]&&g++<K){n=this.nxt(n);if(n===t)break}return n===t?this.nxt(t):n},
  announce(c,txt,to){const st=this.st,gs=this.gs();st.pcfx={id:c.id,t:c.t,d:txt,k:'بطاقة '+this.short(gs[st.turn]),fr:this.short(gs[st.turn]),frc:GC[st.turn],to:to!==undefined?this.short(gs[to]):'',toc:to!==undefined?GC[to]:'',at:Date.now()};this.showCard(st.pcfx)},
  playCard(id,to,kind){const st=this.st,gs=this.gs(),K=gs.length,me=st.turn,c=this.PCS.find(x=>x.id===id),H=this.pcOf(me);if(st.phase!=='pick'||!H[id])return;
   if(c.v&&to!==undefined&&kind===undefined&&!this.disp){this.cardTo=to;FX.tick();this.render();return}this.cardTo=undefined;
@@ -2032,8 +2033,8 @@ const MAPG={st:null,timer:null,
    if(st.yq&&st.phase==='ask'){const nb=[st.sel+1,st.sel-1].find(p=>this.pages().includes(p)&&st.owner[p]===undefined&&st.done[this.juzOf(p)]===undefined);if(nb){st.owner[nb]=who;if(st.tr[nb]===1){st.tr[nb]=2;st.bonus[who]=(st.bonus[who]||0)+5}st.log.unshift('بيقينه عمّر '+gs[who]+' معها '+this.lab(nb))}}
    this.next()}
   else if(st.abid){FX.bad(b);this.slash(who,st.abid.v,'خسر المزاد');st.log.unshift(gs[who]+' خسر المزاد (−'+AR(st.abid.v)+'). '+q.refTxt);st.abid=null;this.next()}
-  else if(st.yq&&st.phase==='ask'&&gs.length>1){FX.bad(b);const nx=this.nxt(st.turn);if(st.done[this.juzOf(st.sel)]===undefined){st.owner[st.sel]=nx;st.last=st.sel}st.log.unshift(gs[who]+' أخطأ في تحدّي اليقين، فانتقلت '+this.lab(st.sel)+' إلى '+gs[nx]);this.next()}
-  else{FX.bad(b);const k=gs.length;if(st.phase==='ask'&&k>1){st.phase='steal';st.stealer=this.nxt(st.turn);st.t0=Date.now();st.frozen=0;st.extra=0;q.gone=null;st.log.unshift(gs[who]+' أخطأ في '+this.lab(st.sel)+'، والفرصة لـ '+gs[st.stealer]);this.save();setTimeout(()=>this.render(),700);return}
+  else if(st.yq&&st.phase==='ask'&&gs.length>1){FX.bad(b);const nx=this.nxtFree(st.turn);if(st.done[this.juzOf(st.sel)]===undefined){st.owner[st.sel]=nx;st.last=st.sel}st.log.unshift(gs[who]+' أخطأ في تحدّي اليقين، فانتقلت '+this.lab(st.sel)+' إلى '+gs[nx]);this.next()}
+  else{FX.bad(b);const k=gs.length;if(st.phase==='ask'&&k>1){st.phase='steal';st.stealer=this.nxtFree(st.turn);st.t0=Date.now();st.frozen=0;st.extra=0;q.gone=null;st.log.unshift(gs[who]+' أخطأ في '+this.lab(st.sel)+'، والفرصة لـ '+gs[st.stealer]);this.save();setTimeout(()=>this.render(),700);return}
    st.log.unshift('لم تُعمَّر '+this.lab(st.sel)+'. '+q.refTxt);this.next()}},
  next(){const st=this.st,K=this.gs().length,gs=this.gs(),tick=()=>{st.turns=(st.turns||0)+1;if(st.turns%K===0&&!(st.rounds&&st.turns>=st.rounds*K))this.newRound()};
   if(st.again){st.again=0;tick()}else{st.turn=this.nxt(st.turn);tick();let g=0;while(st.skip&&st.skip[st.turn]&&g++<K&&!(st.rounds&&st.turns>=st.rounds*K)){delete st.skip[st.turn];st.log.unshift('فات الدور على '+this.short(gs[st.turn])+' بسبب «قِف»');st.turn=this.nxt(st.turn);tick()}}st.phase='pick';st.q=null;st.sel=null;st.abid=null;st.au=null;this.save();setTimeout(()=>this.render(),900);
