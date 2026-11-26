@@ -1229,6 +1229,9 @@ body.has-dash:not(.inpanel) .dk-nav{padding-inline:max(14px,env(safe-area-inset-
 .cv.cv2{container-type:inline-size}
 .cv.cv2 b,.cv.cv2.big b,.dk-th .cv.cv2 b{font-size:clamp(13px,11.5cqw,62px)!important}
 .cv.cv2 b span{-webkit-text-stroke:clamp(3px,2cqw,7px) var(--ex)}
+
+/* اللابتوب والشاشات العريضة: كل الألعاب ظاهرة دون تمرير جانبي */
+@media (min-width:900px){body.has-dash:not(.inpanel) #dash>*{max-width:1240px}body.has-dash:not(.inpanel) #dash>.dk-sec{max-width:none}body.has-dash:not(.inpanel) .dk-sec>*{max-width:1220px}.dk-row{flex-wrap:wrap;justify-content:center;overflow:visible;scroll-snap-type:none;gap:16px}.dk-row>.dk-cd{flex:0 0 calc((100% - 64px)/5);min-width:0}.dk-thumbs{overflow:visible;scroll-snap-type:none;justify-content:center}.dk-thumbs>.dk-th{flex:1 1 0;min-width:0;max-width:200px}.dk-hc{align-items:center}.dk-hc .cv{align-self:stretch;height:auto;min-height:0;aspect-ratio:16/9}.dk-hb{padding:22px 28px}.dk-cd,.dk-th{cursor:pointer}.dk-cd{transition:transform .2s}.dk-cd:hover{transform:translateY(-4px)}.dk-th:hover{opacity:.9}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -2773,6 +2776,8 @@ document.addEventListener('keydown',e=>{if(e.code!=='Space')return;if(!P.nback.h
  const ok=FX.ok;FX.ok=function(b){try{burst(b)}catch(e){}return ok.apply(this,arguments)};})();
 
 (()=>{const tv=()=>{if(location.hash==='#mapg-display'||document.body.classList.contains('disp')){document.documentElement.style.zoom='';return}const w=innerWidth;document.documentElement.style.zoom=w>=2200?(w/1920).toFixed(3):''};tv();addEventListener('resize',tv)})();
+
+(()=>{document.addEventListener('wheel',e=>{const r=e.target.closest&&e.target.closest('.dk-row,.dk-thumbs');if(!r||r.scrollWidth<=r.clientWidth+4||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;const before=r.scrollLeft;r.scrollLeft+=(getComputedStyle(r).direction==='rtl'?-1:1)*e.deltaY;if(r.scrollLeft!==before)e.preventDefault()},{passive:false})})();
 </script>
 </body>
 </html>
