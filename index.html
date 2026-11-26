@@ -1136,6 +1136,8 @@ body.has-dash header .hud,body.has-dash header .xpbar,body.has-dash #home>.tools
 .dk-stats small{color:var(--dkm);font-weight:700;font-size:12.5px}
 @media (min-width:700px){.dk-cd{flex-basis:44%}.dk-th{flex-basis:22%}.dk-hc{display:grid;grid-template-columns:1.2fr 1fr}.dk-hc .cv{aspect-ratio:auto;min-height:100%}}
 @media (prefers-reduced-motion:reduce){.dk-th u::after,.dk-hc .cv{animation:none}}
+
+body.has-dash:not(.inpanel) #buddy{display:none!important}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -2239,19 +2241,25 @@ const DASH={el:null,
   ladder:'<g>'+[...Array(6)].map((_,i)=>'<rect x="'+(20+i*22)+'" y="'+(150-i*22)+'" width="24" height="'+(10+i*22)+'" rx="3" fill="#7FF0E6" opacity="'+(.15+i*.1)+'"/>').join('')+'</g>',
   wheel:'<g transform="translate(70 90)">'+[...Array(8)].map((_,i)=>'<path d="M0 0L'+(70*Math.cos(i*Math.PI/4))+' '+(70*Math.sin(i*Math.PI/4))+'A70 70 0 0 1 '+(70*Math.cos((i+1)*Math.PI/4))+' '+(70*Math.sin((i+1)*Math.PI/4))+'z" fill="'+['#F2C14E','#F2643D','#7C5CF0','#2F6FE4'][i%4]+'" opacity=".55"/>').join('')+'<circle r="12" fill="#fff" opacity=".8"/></g>'}[k]||'';
   return'<div class="cv cv-'+k+(big?' big':'')+'"><svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+P+'</svg><b>'+t+'</b></div>'},
- fi:0,ft:null,
+ fi:0,ft:null,hold:0,F:['mapg','host','mil','ten10','reveal','ladder'],
+ hero(){const F=this.F;if(this.fi>=F.length)this.fi=0;const f=F[this.fi],fd=this.D[f];
+  return'<section class="dk-hero"><div class="dk-hc">'+this.cv(f,1)+'<div class="dk-hb"><span class="badge">'+fd[2]+'</span><h2>'+fd[0]+'</h2><i class="ln"></i><p>'+fd[1]+'</p><div class="dk-hbt"><button class="go" data-dgo="'+f+'"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>ابدأ اللعبة</button><button class="all" data-jump="dk-comp">'+this.ic('games')+'كل الألعاب</button></div></div></div>'+
+   '<div class="dk-thumbs">'+F.map((k,i)=>'<button class="dk-th'+(i===this.fi?' on':'')+'" data-fi="'+i+'">'+this.cv(k)+(i===this.fi?'<u></u>':'')+'</button>').join('')+'</div></section>'},
+ bind(root){root.querySelectorAll('[data-dgo]').forEach(b=>b.onclick=()=>{const t=document.querySelector('#home .tiles [data-go="'+b.dataset.dgo+'"]');t&&t.click()});
+  root.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{const t=$(b.dataset.jump);t&&t.scrollIntoView({behavior:'smooth',block:'start'})});
+  root.querySelectorAll('[data-fi]').forEach(b=>b.onclick=()=>{this.fi=+b.dataset.fi;this.swapHero();this.auto()});
+  const on=root.querySelector('.dk-th.on');if(on&&on.parentNode){const p=on.parentNode;p.scrollTo({left:on.offsetLeft-(p.clientWidth-on.clientWidth)/2,behavior:'smooth'})}},
+ swapHero(){const old=this.el&&this.el.querySelector('.dk-hero');if(!old)return;const sl=old.querySelector('.dk-thumbs').scrollLeft;const t=document.createElement('div');t.innerHTML=this.hero();const n=t.firstChild;old.replaceWith(n);n.querySelector('.dk-thumbs').scrollLeft=sl;this.bind(n)},
  render(){if(!this.el)return;const esc=ROS.esc,AR2=n=>AR(n);let L={rows:{},stats:{},season:1};try{L=LEAGUE.get()}catch(e){}
   const rows=Object.entries(L.rows||{}).sort((a,b)=>b[1].lp-a[1].lp||b[1].w-a[1].w),top=rows[0],hist=(store.get('hist')||[]).length,seen=(store.get('qseen')||[]).length;
   const best=k=>{let b=null,bv=0;for(const [n,v] of Object.entries((L.stats||{})[k]||{}))if(v>bv){bv=v;b=n}return b?[b,bv]:null};
   const wins=rows.slice().sort((a,b)=>b[1].w-a[1].w)[0];
   const M=[['crown','بطل الموسم',top&&top[1].lp?[top[0],AR2(top[1].lp)+' نقطة دوري']:null],['win','الأكثر فوزًا',wins&&wins[1].w?[wins[0],AR2(wins[1].w)+' فوز']:null],['gem','صائد الكنوز',(b=>b&&[b[0],AR2(b[1])+' كنوز'])(best('tr'))],['seal','حامي الأجزاء',(b=>b&&[b[0],AR2(b[1])+' أجزاء'])(best('seal'))],['flame','أطول سلسلة',(b=>b&&[b[0],AR2(b[1])+' متتالية'])(best('streak'))],['gavel','أجرأ مزايد',(b=>b&&[b[0],'بـ'+AR2(b[1])])(best('auc'))]];
-  const got=M.filter(m=>m[2]).length,F=['mapg','host','mil','ten10','reveal','ladder'];if(this.fi>=F.length)this.fi=0;
+  const got=M.filter(m=>m[2]).length;
   const card=(k,tool)=>{const d=this.D[k];return'<button class="dk-cd" '+(tool?'data-dtool':'data-dgo')+'="'+k+'">'+this.cv(k)+'<span class="dk-ov"><i class="pl"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></i>'+d[1]+'</span></button>'};
   const sec=(id,cls,ic,title,chip,desc,inner)=>'<section class="dk-sec '+cls+'" id="'+id+'"><div class="dk-sh"><i>'+this.ic(ic)+'</i><div><h3>'+title+' <span class="chip">'+chip+'</span></h3><p>'+desc+'</p></div></div>'+inner+'</section>';
   let h='<nav class="dk-nav">'+[['dk-comp','المسابقات','#3DDC84'],['dk-quick','الألعاب','#FF6B6B'],['dk-medals','الأوسمة','#F2C14E'],['dk-tools','الأدوات','#5B8CFF']].map(([id,n,c])=>'<button data-jump="'+id+'"><i style="background:'+c+'"></i>'+n+'</button>').join('')+'</nav>';
-  const f=F[this.fi],fd=this.D[f];
-  h+='<section class="dk-hero"><div class="dk-hc">'+this.cv(f,1)+'<div class="dk-hb"><span class="badge">'+fd[2]+'</span><h2>'+fd[0]+'</h2><i class="ln"></i><p>'+fd[1]+'</p><div class="dk-hbt"><button class="go" data-dgo="'+f+'"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>ابدأ اللعبة</button><button class="all" data-jump="dk-comp">'+this.ic('games')+'كل الألعاب</button></div></div></div>'+
-   '<div class="dk-thumbs">'+F.map((k,i)=>'<button class="dk-th'+(i===this.fi?' on':'')+'" data-fi="'+i+'">'+this.cv(k)+(i===this.fi?'<u></u>':'')+'</button>').join('')+'</div></section>';
+  h+=this.hero();
   h+=sec('dk-comp','g','trophy','مسابقات المجموعات',AR2(4)+' مسابقات','للحلقة كلها: المشرف يدير، والمجموعات تتنافس.','<div class="dk-row">'+['mapg','host','mil','ten10'].map(k=>card(k)).join('')+'</div>');
   h+=sec('dk-quick','r','games','ألعاب سريعة',AR2(3)+' ألعاب','لدقائق قبل الدرس أو بعده.','<div class="dk-row">'+card('reveal')+card('ladder')+card('wheel',1)+'</div>');
   h+=sec('dk-medals','y','medal','أوسمة الموسم',AR2(got)+'/'+AR2(M.length),'تُحسب من «دوري الحلقة» تلقائيًا.','<div class="d-grid g3">'+M.map(([ic,n,v],i)=>'<button class="d-it md" data-dtool="league" style="--k:#E8A33B;--n:'+i+'"><i class="'+(v?'on':'off')+'">'+this.ic(ic)+'</i><span>'+n+'</span><small>'+(v?esc(v[0])+'<br>'+v[1]:'لم يُحرز بعد')+'</small></button>').join('')+'</div>');
@@ -2259,15 +2267,11 @@ const DASH={el:null,
   h+=sec('dk-tools','b','gear','أدوات المشرف',AR2(T.length)+' أدوات','لإدارة المتسابقين والأسئلة والنتائج.','<div class="d-grid g4">'+T.map(([k,n,ic],i)=>'<button class="d-it sm" data-dtool="'+k+'" style="--n:'+i+'"><i class="soft">'+this.ic(ic)+'</i><span>'+n+'</span></button>').join('')+(()=>{const d=$('dlOff');return d&&!d.hidden?'<button class="d-it sm" data-dl="1"><i class="soft">'+this.ic('save')+'</i><span>نسخة دون إنترنت</span></button>':''})()+'</div>');
   h+='<div class="dk-stats"><div><b>'+AR2(hist)+'</b><small>مباراة لُعبت</small></div><div><b class="nm">'+(top?esc(top[0]):'—')+'</b><small>متصدّر الدوري</small></div><div><b>'+AR2(seen)+'</b><small>سؤالًا مختلفًا ظهر</small></div></div>';
   this.el.innerHTML=h;
-  this.el.querySelectorAll('[data-dgo]').forEach(b=>b.onclick=()=>{const t=document.querySelector('#home .tiles [data-go="'+b.dataset.dgo+'"]');t&&t.click()});
+  this.bind(this.el);if(!this.el.dataset.hb){this.el.dataset.hb=1;['pointerdown','touchstart','wheel'].forEach(e=>this.el.addEventListener(e,()=>{this.hold=Date.now()},{passive:true}));}
   this.el.querySelectorAll('[data-dtool]').forEach(b=>b.onclick=()=>{const t=document.querySelector('#home .tools [data-tool="'+b.dataset.dtool+'"]');t&&t.click();if(b.dataset.dtool==='skin')setTimeout(()=>this.render(),50)});
   this.el.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>$('dlOff').click());
-  this.el.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{const t=$(b.dataset.jump);t&&t.scrollIntoView({behavior:'smooth',block:'start'})});
-  this.el.querySelectorAll('[data-fi]').forEach(b=>b.onclick=()=>{this.fi=+b.dataset.fi;this.render();this.auto()});
-  const on=this.el.querySelector('.dk-th.on');if(on&&on.parentNode){const p=on.parentNode;p.scrollTo({left:on.offsetLeft-(p.clientWidth-on.clientWidth)/2,behavior:'smooth'})}
   if(!this.ft)this.auto()},
- auto(){clearInterval(this.ft);this.ft=setInterval(()=>{if(document.body.classList.contains('inpanel')||document.hidden)return;const u=this.el&&this.el.querySelector('.dk-th.on u');this.fi=(this.fi+1)%6;
-  const hero=this.el.querySelector('.dk-hero');if(!hero)return;const y=scrollY;this.render();scrollTo(0,y)},6000)}};
+ auto(){clearInterval(this.ft);this.ft=setInterval(()=>{if(document.body.classList.contains('inpanel')||document.hidden||Date.now()-this.hold<8000)return;this.fi=(this.fi+1)%this.F.length;this.swapHero()},6000)}};
 DASH.init();
 
 // ===== تشغيل شاشة العرض (نافذة للطلاب تتبع نافذة المشرف لحظة بلحظة)
