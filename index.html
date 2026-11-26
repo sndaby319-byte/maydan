@@ -1048,6 +1048,34 @@ body.disp .mg-wnote::after{content:'';display:block}
 .au-log{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.au-log span{font-size:13px;padding:2px 10px;border-radius:99px;background:rgba(255,255,255,.08)}.au-log span:first-child{background:rgba(227,179,65,.25);color:#FFE38A}
 .au-foot{margin-top:12px;text-align:center}.au-foot .btn.gold{background:linear-gradient(145deg,#F2C14E,#C9932A)!important;color:#14182A!important;box-shadow:0 5px 0 #9C7420!important}
 body.disp .au-bt button,body.disp .au-foot{display:none!important}body.disp .au-hi b{font-size:70px}body.disp .au-t b{font-size:70px}body.disp .au-tm b{font-size:26px}
+
+/* ===== اللوحة الرئيسية */
+body.has-dash header .hud,body.has-dash header .xpbar,body.has-dash #home>.tools,body.has-dash #home>.tiles,body.has-dash #home>.hsec,body.has-dash #home>.how{display:none!important}
+#dash{display:flex;flex-direction:column;gap:16px;margin:6px 0 10px;position:relative;z-index:5}
+.d-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.d-st{background:var(--paper);border-radius:26px;padding:16px 8px 14px;text-align:center;box-shadow:0 1px 0 rgba(0,0,0,.03),0 10px 24px -14px rgba(60,40,10,.25);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);animation:dIn .5s both}
+.d-st i{display:grid;place-items:center;width:34px;height:34px;margin:0 auto 4px;color:var(--k)}.d-st i svg{width:30px;height:30px;stroke-width:2.2}
+.d-st b{display:block;font-family:var(--num);font-weight:800;font-size:32px;line-height:1.15;color:var(--ink)}
+.d-st b.nm{font-family:var(--body);font-size:17px;line-height:1.35;min-height:43px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+.d-st small{color:var(--muted);font-weight:700;font-size:13px}
+.d-card{background:var(--paper);border-radius:30px;padding:20px 16px 18px;box-shadow:0 1px 0 rgba(0,0,0,.03),0 14px 30px -18px rgba(60,40,10,.3);border:1px solid color-mix(in srgb,var(--line) 70%,transparent);animation:dIn .5s .08s both}
+.d-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 4px 14px}
+.d-h h3{margin:0;font-family:var(--display);font-size:26px;color:var(--ink)}.d-h span{font-family:var(--num);font-weight:800;color:var(--muted);font-size:18px}
+.d-grid{display:grid;gap:16px 8px}.d-grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.d-grid.g4{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 4px}
+.d-it{display:flex;flex-direction:column;align-items:center;gap:7px;background:none;border:0;padding:0;font:inherit;color:var(--ink);cursor:pointer;-webkit-tap-highlight-color:transparent;animation:dPop .45s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--n,0)*45ms + 120ms)}
+.d-it i{display:grid;place-items:center;width:74px;height:74px;border-radius:50%;transition:transform .15s}
+.d-it i svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:2}
+.d-it i.on{background:radial-gradient(circle at 35% 28%,color-mix(in srgb,var(--k) 70%,#fff),var(--k) 60%,color-mix(in srgb,var(--k) 80%,#000));color:#fff;box-shadow:0 8px 18px -8px var(--k),inset 0 -3px 0 rgba(0,0,0,.12)}
+.d-it i.off{background:color-mix(in srgb,var(--muted) 14%,var(--paper));color:color-mix(in srgb,var(--muted) 70%,var(--paper))}
+.d-it i.soft{width:58px;height:58px;background:color-mix(in srgb,var(--muted) 10%,var(--paper));color:var(--ink);border:1px solid color-mix(in srgb,var(--line) 80%,transparent)}.d-it i.soft svg{width:26px;height:26px}
+.d-it span{font-weight:800;font-size:15px;line-height:1.3;text-align:center}.d-it.sm span{font-size:12.5px;font-weight:700;color:var(--muted)}
+.d-it small{font-size:11.5px;color:var(--muted);text-align:center;line-height:1.3;margin-top:-3px}
+.d-it.md i.off+span{color:var(--muted)}
+.d-it:active i{transform:scale(.92)}@media (hover:hover){.d-it:hover i{transform:translateY(-3px)}}
+@keyframes dIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes dPop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@media (min-width:700px){.d-grid.g3{grid-template-columns:repeat(6,minmax(0,1fr))}.d-grid.g4{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){.d-it,.d-st,.d-card{animation:none}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -2130,6 +2158,37 @@ const LEAGUE={el:null,
   h+='<div class="bar" style="margin-top:12px"><span></span><button class="btn ghost sm drop" id="lg-new">بدء موسم جديد</button></div>';
   this.el.innerHTML=h;$('lg-new').onclick=()=>{if(confirm('بدء موسم جديد؟ سيُصفّر جدول الدوري.')){const o=this.get();this.save({season:(o.season||1)+1,start:new Date().toLocaleDateString('ar-SA'),rows:{},hist:[],stats:{}});this.render()}}}};
 LEAGUE.init();
+// ===== اللوحة الرئيسية: أرقام، وألعاب، وأوسمة، وأدوات (الأزرار القديمة باقية مخفية وتُستدعى من هنا)
+const DASH={el:null,
+ I:{trophy:'<path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 14v4M8 20h8"/>',crown:'<path d="M3 8l4 4 5-7 5 7 4-4-2 11H5z"/><path d="M5 19h14"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h7"/>',games:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
+  gem:'<path d="M6 3h12l3 6-9 12L3 9z"/><path d="M3 9h18M12 21 9 9l3-6 3 6z"/>',seal:'<circle cx="12" cy="10" r="6"/><path d="M9 15l-2 6 5-2 5 2-2-6"/>',flame:'<path d="M12 3c1 4 6 5 6 11a6 6 0 0 1-12 0c0-3 2-5 3-6 0 2 1 3 2 3 0-3-1-5 1-8z"/>',gavel:'<path d="M14 4l6 6M11 7l6 6M13 5l-5 5 6 6 5-5M10 12l-7 7"/><path d="M3 21h9"/>',win:'<path d="M12 2l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17l-5.9 3 1.2-6.5L2.5 8.9 9.1 8z"/>',
+  league:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14c3 0 5 2 5 5"/>',wheel:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/>',palette:'<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 2-2 0-1.5-1-2 0-3s4 0 5-2a9 9 0 0 0-7-11z"/><circle cx="7.5" cy="11" r="1.3"/><circle cx="10" cy="7" r="1.3"/><circle cx="15" cy="7.5" r="1.3"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',medal:'<circle cx="12" cy="15" r="5"/><path d="M8 3l4 7 4-7M12 13v4"/>',board:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 14l3-4 3 3 4-5"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',learn:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>',save:'<path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M8 21v-7h8v7"/>'},
+ ic(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(this.I[n]||'')+'</svg>'},
+ G:[['host','مسابقة الحلقة','#F5A524'],['mapg','خريطة المصحف','#2F6FE4'],['mil','من سيربح؟','#7C5CF0'],['ten10','تحدّي العشرة','#F2643D'],['reveal','اكشف السورة','#1FA463'],['ladder','سُلّم الحفّاظ','#0EA5A4']],
+ T:[['league','دوري الحلقة','league'],['roster','المتسابقون','users'],['wheel','عجلة الأسماء','wheel'],['honor','لوحة الشرف','medal'],['board','لوحة النقاط','board'],['learn','تعلّم قبل أن تُسأل','learn'],['settings','إعدادات الأسئلة','gear'],['qrep','بلاغات الأسئلة','flag'],['skin','الألوان','palette'],['backup','النسخة الاحتياطية','save']],
+ init(){const home=$('home');if(!home)return;this.el=document.createElement('div');this.el.id='dash';home.insertBefore(this.el,home.firstChild);document.body.classList.add('has-dash');this.render();
+  const gh=window.goHome;window.goHome=function(){gh.apply(this,arguments);try{DASH.render()}catch(e){}};addEventListener('hashchange',()=>{if(!location.hash)this.render()})},
+ render(){if(!this.el)return;const esc=ROS.esc,AR2=n=>AR(n);let L={rows:{},stats:{},season:1};try{L=LEAGUE.get()}catch(e){}
+  const rows=Object.entries(L.rows||{}).sort((a,b)=>b[1].lp-a[1].lp||b[1].w-a[1].w),top=rows[0],hist=(store.get('hist')||[]).length,seen=(store.get('qseen')||[]).length;
+  const best=k=>{let b=null,bv=0;for(const [n,v] of Object.entries((L.stats||{})[k]||{}))if(v>bv){bv=v;b=n}return b?[b,bv]:null};
+  const wins=rows.slice().sort((a,b)=>b[1].w-a[1].w)[0];
+  const M=[['crown','بطل الموسم',top&&top[1].lp?[top[0],AR2(top[1].lp)+' نقطة دوري']:null],['win','الأكثر فوزًا',wins&&wins[1].w?[wins[0],AR2(wins[1].w)+' فوز']:null],['gem','صائد الكنوز',(b=>b&&[b[0],AR2(b[1])+' كنوز'])(best('tr'))],['seal','حامي الأجزاء',(b=>b&&[b[0],AR2(b[1])+' أجزاء'])(best('seal'))],['flame','أطول سلسلة',(b=>b&&[b[0],AR2(b[1])+' متتالية'])(best('streak'))],['gavel','أجرأ مزايد',(b=>b&&[b[0],'بـ'+AR2(b[1])])(best('auc'))]];
+  const got=M.filter(m=>m[2]).length;
+  let h='<div class="d-stats">'+
+   '<div class="d-st"><i style="--k:#F2643D">'+this.ic('games')+'</i><b>'+AR2(hist)+'</b><small>مباريات</small></div>'+
+   '<div class="d-st"><i style="--k:#F5A524">'+this.ic('crown')+'</i><b class="nm">'+(top?esc(top[0]):'—')+'</b><small>متصدّر الدوري</small></div>'+
+   '<div class="d-st"><i style="--k:#2F6FE4">'+this.ic('book')+'</i><b>'+AR2(seen)+'</b><small>سؤالًا مختلفًا ظهر</small></div></div>';
+  h+='<section class="d-card"><div class="d-h"><h3>الألعاب</h3></div><div class="d-grid g3">'+this.G.map(([k,n,c],i)=>{const t=document.querySelector('#home .tiles [data-go="'+k+'"]');if(!t)return'';const sv=t.querySelector('svg');return'<button class="d-it" data-dgo="'+k+'" style="--k:'+c+';--n:'+i+'"><i class="on">'+(sv?sv.outerHTML:'')+'</i><span>'+n+'</span></button>'}).join('')+'</div></section>';
+  h+='<section class="d-card"><div class="d-h"><h3>أوسمة الموسم</h3><span>'+AR2(got)+'/'+AR2(M.length)+'</span></div><div class="d-grid g3">'+M.map(([ic,n,v],i)=>'<button class="d-it md" data-dtool="league" style="--k:#E8743B;--n:'+i+'"><i class="'+(v?'on':'off')+'">'+this.ic(ic)+'</i><span>'+n+'</span><small>'+(v?esc(v[0])+'<br>'+v[1]:'لم يُحرز بعد')+'</small></button>').join('')+'</div></section>';
+  h+='<section class="d-card"><div class="d-h"><h3>أدوات المشرف</h3></div><div class="d-grid g4">'+this.T.map(([k,n,ic],i)=>'<button class="d-it sm" data-dtool="'+k+'" style="--n:'+i+'"><i class="soft">'+this.ic(ic)+'</i><span>'+n+'</span></button>').join('')+
+   (()=>{const d=$('dlOff');return d&&!d.hidden?'<button class="d-it sm" data-dl="1"><i class="soft">'+this.ic('save')+'</i><span>نسخة دون إنترنت</span></button>':''})()+'</div></section>';
+  this.el.innerHTML=h;
+  this.el.querySelectorAll('[data-dgo]').forEach(b=>b.onclick=()=>{const t=document.querySelector('#home .tiles [data-go="'+b.dataset.dgo+'"]');t&&t.click()});
+  this.el.querySelectorAll('[data-dtool]').forEach(b=>b.onclick=()=>{const t=document.querySelector('#home .tools [data-tool="'+b.dataset.dtool+'"]');t&&t.click();if(b.dataset.dtool==='skin')setTimeout(()=>this.render(),50)});
+  this.el.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>$('dlOff').click())}};
+DASH.init();
+
 // ===== تشغيل شاشة العرض (نافذة للطلاب تتبع نافذة المشرف لحظة بلحظة)
 {const _r=MAPG.render;MAPG.render=function(){_r.apply(this,arguments);if(!this.disp&&this.st&&this.st.active)try{this.save()}catch(e){}}}
 addEventListener('hashchange',()=>{if(location.hash==='#mapg-display'&&!document.body.classList.contains('disp'))location.reload()});
