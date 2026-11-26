@@ -1138,6 +1138,19 @@ body.has-dash header .hud,body.has-dash header .xpbar,body.has-dash #home>.tools
 @media (prefers-reduced-motion:reduce){.dk-th u::after,.dk-hc .cv{animation:none}}
 
 body.has-dash:not(.inpanel) #buddy{display:none!important}
+
+/* ===== الشاشة الرئيسية داكنة كلها، والمربع يمتد بعرض الشاشة */
+html:has(body.has-dash:not(.inpanel)),body.has-dash:not(.inpanel){background:#0E1226!important;overflow-x:clip}
+body.has-dash:not(.inpanel) #bgfx{background:#0E1226!important}body.has-dash:not(.inpanel) #bgfx>*{display:none!important}
+body.has-dash:not(.inpanel) .deco{display:none!important}
+body.has-dash:not(.inpanel) header h1{background:none!important;-webkit-text-fill-color:#FFFFFF!important;color:#FFFFFF!important;text-shadow:3px 3px 0 #C98F0F!important}
+body.has-dash:not(.inpanel) header .kick{color:#F2C14E!important}
+body.has-dash:not(.inpanel) header .lead{color:rgba(240,238,233,.6)!important}
+body.has-dash:not(.inpanel) .snd{background:rgba(255,255,255,.06)!important;color:#CFD3E6!important;border-color:rgba(255,255,255,.14)!important}
+body.has-dash:not(.inpanel) .note{color:rgba(240,238,233,.5)!important}
+body.has-dash:not(.inpanel) #dash{border-radius:0!important;box-shadow:none!important;margin-inline:calc(50% - 50vw)!important;margin-top:4px!important}
+body.has-dash:not(.inpanel) .dk-nav{padding-inline:max(14px,env(safe-area-inset-left,0px))}
+@media (min-width:700px){body.has-dash:not(.inpanel) #dash>*{max-width:900px;margin-inline:auto}body.has-dash:not(.inpanel) .dk-sec{max-width:none}body.has-dash:not(.inpanel) .dk-sec>*{max-width:880px;margin-inline:auto}}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
