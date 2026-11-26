@@ -924,7 +924,7 @@ body.disp header,body.disp .tools,body.disp .tiles,body.disp .hsec,body.disp foo
 body.disp #g-mapg{pointer-events:none}
 body.disp #backbar,body.disp .mg-key,body.disp .mg-judge,body.disp .mg-foot,body.disp .mg-tools,body.disp .ded,body.disp .mg-log,body.disp .qrep,body.disp .mg-yq:not(.on),body.disp .mg-help{display:none!important}
 body.disp .mg-dispnote{display:block;margin:12px 0;padding:16px;border-radius:16px;text-align:center;font-family:var(--display);font-size:26px;color:#C9932A;background:color-mix(in srgb,#E3B341 12%,var(--paper));border:2px dashed #C9932A}
-body.disp .mg-bar{top:0;position:sticky}body.disp #panels{max-width:1500px}body.disp .mg-tm b{font-size:40px}body.disp .mg-tm span{font-size:16px!important}
+body.disp .mg-bar{top:0;position:sticky}body.disp #panels{max-width:none;width:1280px;margin-inline:auto;padding-top:8px}body.disp #panels~*,body.disp .fnote{display:none!important}body.disp .mg-tm b{font-size:40px}body.disp .mg-tm span{font-size:16px!important}
 body.disp .qask{font-size:clamp(24px,2.6vw,36px)!important}body.disp .qc{font-size:clamp(20px,2vw,30px)!important}
 body.disp .mg-cells{grid-template-columns:repeat(auto-fill,minmax(64px,1fr))}body.disp .mg-board .mg-c{font-size:22px!important}
 body.disp .mg-turn b{font-size:40px}body.disp .mg-jh b{font-size:24px}
@@ -958,7 +958,7 @@ body.disp .mg-pcs i{font-size:14px}
 .disp-back{display:none}
 body.disp .disp-back{display:inline-flex;align-items:center;position:fixed;top:max(10px,env(safe-area-inset-top));inset-inline-start:10px;z-index:80;font:inherit;font-weight:800;font-size:14px;padding:9px 16px;border-radius:999px;border:1.5px solid rgba(15,20,36,.18);background:rgba(255,255,255,.92);color:#0F1424;box-shadow:0 6px 18px -8px rgba(0,0,0,.35);cursor:pointer;opacity:.55;transition:opacity .2s;pointer-events:auto}
 body.disp .disp-back:hover,body.disp .disp-back:active,body.disp .disp-back:focus{opacity:1}
-@media (hover:none){body.disp .disp-back{opacity:1;background:#fff;border-color:rgba(15,20,36,.3)}}
+@media (hover:none){body.disp .disp-back{opacity:1;background:#fff;border-color:rgba(15,20,36,.3)}body.disp .disp-back{font-size:clamp(14px,1vw,36px);padding:.6em 1.1em}}
 
 /* ===== الوقت لا يبدأ إلا بأمر المشرف */
 .mg-q.wait .mg-help,.mg-q.wait .qrep{display:none}
@@ -968,6 +968,8 @@ body.disp .disp-back:hover,body.disp .disp-back:active,body.disp .disp-back:focu
 .mg-start .btn{font-size:17px;padding:13px 22px;flex:1 1 200px}
 .mg-start .btn.gold,body .mg-start button.btn.gold{background:linear-gradient(145deg,#F2C14E,#C9932A)!important;color:#14182A!important;box-shadow:0 5px 0 #9C7420!important;border-color:#C9932A!important}
 body.disp .mg-start{display:none}
+body.disp .tr-st{width:min(90vw,78vmin)}body.disp .tr-v{font-size:clamp(60px,13vmin,260px)}body.disp .tr-ov{gap:1vmin}body.disp .tr-t{font-size:clamp(20px,4.4vmin,72px)}body.disp .cut-wrap{width:min(84vw,110vmin);height:min(34vw,44vmin)}body.disp .cut-card b{font-size:clamp(30px,10vmin,150px)}body.disp .cut-v{font-size:clamp(64px,22vmin,300px)}body.disp .cut-t{font-size:clamp(20px,4.4vmin,72px)}
+
 body.disp .mg-wnote{font-family:var(--display);font-size:28px;color:var(--ink)}
 body.disp .mg-wnote::after{content:'';display:block}
 .mg-wnote .stu{display:none}body.disp .mg-wnote .sup{display:none}body.disp .mg-wnote .stu{display:inline}
@@ -2400,7 +2402,7 @@ DASH.init();
 // ===== تشغيل شاشة العرض (نافذة للطلاب تتبع نافذة المشرف لحظة بلحظة)
 {const _r=MAPG.render;MAPG.render=function(){_r.apply(this,arguments);if(!this.disp&&this.st&&this.st.active)try{this.save()}catch(e){}}}
 addEventListener('hashchange',()=>{if(location.hash==='#mapg-display'&&!document.body.classList.contains('disp'))location.reload()});
-(()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};MAPG.playCard=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
+(()=>{if(location.hash!=='#mapg-display')return;const go=()=>{document.body.classList.add('disp','inpanel');MAPG.disp=true;window.dispFit=()=>{const el=$('panels');if(!el||!document.body.classList.contains('disp'))return;el.style.transform='';const r=el.getBoundingClientRect(),h=el.scrollHeight;const z=Math.max(1,Math.min(innerWidth*.97/Math.max(r.width,1),innerHeight*.97/Math.max(h,1)));el.style.transformOrigin='50% 0';el.style.transform=z>1.02?'scale('+z.toFixed(3)+')':''};const _mr=MAPG.render.bind(MAPG);MAPG.render=function(){const x=_mr.apply(this,arguments);requestAnimationFrame(dispFit);return x};addEventListener('resize',()=>requestAnimationFrame(dispFit));setTimeout(dispFit,300);FX.snd=false;MAPG.save=()=>{};MAPG.answer=()=>{};MAPG.next=()=>{};MAPG.playCard=()=>{};const sp=$('splash');if(sp)sp.hidden=true;
   const load=()=>{const v=store.get('mapg');if(v)MAPG.st=Object.assign(MAPG.def(),v)};load();show('mapg');MAPG.render();document.title='ميدان التركيز · شاشة العرض';const bk=document.createElement('button');bk.className='disp-back';bk.type='button';bk.dir='rtl';bk.textContent='→ رجوع إلى التحكم';bk.onclick=()=>{let closed=false;if(window.opener&&!window.opener.closed){try{window.close();closed=window.closed}catch(e){}}setTimeout(()=>{if(!window.closed){location.replace(location.href.split('#')[0]+'#mapg');location.reload()}},150)};document.body.appendChild(bk);
   let lastEv=JSON.stringify(MAPG.st.ev||null);
   let lastPc=JSON.stringify(MAPG.st.pcfx||null),lastCut=JSON.stringify(MAPG.st.cut||null),lastTr=JSON.stringify(MAPG.st.trfx||null);addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;const t=(store.get('mapg')||{}).trfx,j=JSON.stringify(t||null);if(j!==lastTr){lastTr=j;if(t&&Date.now()-t.at<5000)MAPG.treasure(t)}});addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;const c=JSON.stringify((store.get('mapg')||{}).cut||null);if(c!==lastCut){lastCut=c;const v=(store.get('mapg')||{}).cut;if(v&&Date.now()-v.at<5000)MAPG.showCut(v)}});addEventListener('storage',e=>{if(e.key!=='tz2_mapg')return;load();const pc=JSON.stringify(MAPG.st.pcfx||null);if(pc!==lastPc&&MAPG.st.pcfx)MAPG.showCard(MAPG.st.pcfx);lastPc=pc;const ev=JSON.stringify(MAPG.st.ev||null);if(ev!==lastEv&&MAPG.st.ev){MAPG.showCard(MAPG.st.ev)}lastEv=ev;MAPG.render()});
@@ -2769,6 +2771,8 @@ document.addEventListener('keydown',e=>{if(e.code!=='Space')return;if(!P.nback.h
  const burst=el=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=el&&el.getBoundingClientRect?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0,height:0};
   for(let n=0;n<8;n++){const b=document.createElement('i');b.className='burst';const a=n*Math.PI/4,v=80;b.style.cssText='left:'+(r.left+r.width/2-10)+'px;top:'+(r.top+r.height/2-10)+'px;width:20px;--k:var(--'+K[n%3]+');--dx:'+Math.cos(a)*v+'px;--dy:'+Math.sin(a)*v+'px';b.innerHTML=S;document.body.appendChild(b);setTimeout(()=>b.remove(),900)}};
  const ok=FX.ok;FX.ok=function(b){try{burst(b)}catch(e){}return ok.apply(this,arguments)};})();
+
+(()=>{const tv=()=>{if(location.hash==='#mapg-display'||document.body.classList.contains('disp')){document.documentElement.style.zoom='';return}const w=innerWidth;document.documentElement.style.zoom=w>=2200?(w/1920).toFixed(3):''};tv();addEventListener('resize',tv)})();
 </script>
 </body>
 </html>
