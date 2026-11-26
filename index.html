@@ -1216,6 +1216,10 @@ body.has-dash:not(.inpanel) .dk-nav{padding-inline:max(14px,env(safe-area-inset-
 @keyframes cutV{from{transform:scale(0) rotate(-12deg)}to{transform:rotate(-4deg)}}
 .cut-t{text-align:center;color:#fff;font-weight:900;font-size:clamp(20px,3.6vw,34px);animation:tcFade .4s 1s both;opacity:0}.cut-t small{display:block;font-weight:700;font-size:.6em;color:rgba(255,255,255,.75)}
 @media (prefers-reduced-motion:reduce){.cut-ov *{animation-duration:.01s!important;animation-delay:0s!important}}
+
+[data-night] .qc.right{background:#123A2A!important;color:#B9F5D3!important;border-color:#3DD68C!important;box-shadow:0 5px 0 #1A8A56!important}
+[data-night] .du-b.right{background:#123A2A!important;color:#B9F5D3!important}
+[data-night] .qc.right *{color:inherit!important}
 </style>
 
 <div id="splash" aria-hidden="true"><div class="sp-in"><svg class="sp-logo" viewBox="-130 -130 260 260" aria-hidden="true"><path class="l1" d="M-105 44Q-72 38-39 44V74Q-72 70.7-105 74Z"/><path class="ln" d="M-98 52.5Q-72 47.7-46 52.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l2" d="M-35 10Q-2 4 31 10V40Q-2 36.7-35 40Z"/><path class="ln" d="M-28 18.5Q-2 13.7 24 18.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="l3" d="M35-24Q68-30 101-24V6Q68 2.7 35 6Z"/><path class="ln" d="M42-15.5Q68-20.3 94-15.5" fill="none" stroke-width="2.6" stroke-linecap="round" opacity=".85"/><path class="lb" d="M-110 96C-64 80-22 84 0 100C22 84 64 80 110 96" fill="none" stroke-width="11" stroke-linecap="round"/><path class="lstar" d="M68-73L71.25-63.85L80.02-68.02L75.85-59.25L85-56L75.85-52.75L80.02-43.98L71.25-48.15L68-39L64.75-48.15L55.98-43.98L60.15-52.75L51-56L60.15-59.25L55.98-68.02L64.75-63.85Z"/></svg><div class="sp-k">حلقة عمر بن عبد العزيز</div><div class="sp-t">ميدان التركيز</div><div class="sp-s">تمارين · أسئلة قرآنية · مسابقات</div></div></div>
@@ -1449,7 +1453,7 @@ nback(P.nback,false);nback(P.dual,true);
   $('m-show').textContent=AR(cur);$('m-show').style.color='';t0=performance.now();clearInterval(tm);tm=setInterval(()=>$('m-time').innerHTML=AR(((performance.now()-t0)/1000).toFixed(1))+'<small>ثانية</small>',100);setTimeout(()=>{if(tm&&k===0)$('m-show').textContent='؟'},2500)}})();
 
 // ===== Group competition: four groups take turns on the same device; each round ranks them and awards 10/7/5/3
-const GC=['#0B5A3C','#C98F0F','#2C5DB0','#B4462F'];
+const GC=['#0B5A3C','#C98F0F','#2C5DB0','#B4462F'];if(document.documentElement.dataset.night){GC[0]='#1FA463';GC[1]='#E0A21E';GC[2]='#3F7DE8';GC[3]='#E0573D'}
 const GL={quran:'أسئلة قرآنية',schulte:'جدول الأرقام ٥×٥',stroop:'لون الكلمة',nback:'ذاكرة المواقع N=٢',dual:'المزدوج N=١',span:'تتبّع الترتيب',gonogo:'اضغط أو امسك',search:'الحرف المختلف ٦×٦',minus:'الطرح المتتالي (اطرح ٧)'};
 const GLV={quran:0,schulte:1,stroop:0,nback:1,dual:0,span:0,gonogo:0,search:0,minus:1};
 const PTSK={2:[10,5],3:[10,6,3],4:[10,7,5,3]};
@@ -2601,7 +2605,7 @@ const WHEEL={el:null,ang:0,spinning:false,win:null,
  init(){this.el=mkSec('wheel')},
  open(){location.hash='wheel';show('wheel');this.render();this.el.scrollIntoView({behavior:'smooth',block:'start'})},
  all(c){const L=ROS.st().list,K=COMP.K();
-  if(c.src==='stu'){const T=c.teams&&c.teams.length?c.teams:[...Array(K).keys()];return L.filter(m=>T.includes(m.g)).map(m=>m.n)}
+  if(c.src==='stu'){const T=c.teams&&c.teams.length?c.teams:[...Array(K).keys()];const r=L.filter(m=>T.includes(m.g)).map(m=>m.n);return r.length?r:COMP.gs().filter((_,k)=>T.includes(k))}
   if(c.src==='teams')return COMP.gs().slice();
   if(c.src==='custom')return c.custom.split(/\n|،|,/).map(x=>x.trim()).filter(Boolean);
   const k=+c.src.slice(1);return L.filter(m=>m.g===k).map(m=>m.n)},
@@ -2711,7 +2715,7 @@ document.addEventListener('keydown',e=>{if(e.code!=='Space')return;if(!P.nback.h
 ;// ===== Tools row, backup and restore
 (()=>{const keys=()=>{const o={};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('tz2_'))o[k]=localStorage.getItem(k)}}catch(e){}return o};
  document.querySelectorAll('.tools button').forEach(b=>b.onclick=()=>{FX.tick();const t=b.dataset.tool;
-  if(t==='wheel'){WHEEL.open();return}if(t==='qrep'){QREP.open();return}if(t==='league'){LEAGUE.open();return}if(t==='skin'){const r=document.documentElement,cur=r.dataset.night?'night':r.dataset.skin==='marah'?'marah':'sky',nx={night:'marah',marah:'sky',sky:'night'}[cur];delete r.dataset.night;if(nx==='sky')delete r.dataset.skin;else r.dataset.skin='marah';if(nx==='night')r.dataset.night='1';try{localStorage.setItem('tz2_skin',nx)}catch(e){}return}if(t==='roster'){ROS.open();return}if(t==='board'){SB.open('comp');return}if(t==='backup'){$('bk-msg').textContent='';$('bk').hidden=false;return}
+  if(t==='wheel'){WHEEL.open();return}if(t==='qrep'){QREP.open();return}if(t==='league'){LEAGUE.open();return}if(t==='skin'){const r=document.documentElement,cur=r.dataset.night?'night':r.dataset.skin==='marah'?'marah':'sky',nx={night:'marah',marah:'sky',sky:'night'}[cur];delete r.dataset.night;if(nx==='sky')delete r.dataset.skin;else r.dataset.skin='marah';if(nx==='night')r.dataset.night='1';try{localStorage.setItem('tz2_skin',nx)}catch(e){}setTimeout(()=>location.reload(),80);return}if(t==='roster'){ROS.open();return}if(t==='board'){SB.open('comp');return}if(t==='backup'){$('bk-msg').textContent='';$('bk').hidden=false;return}
   if(t==='settings'){QZ.all();location.hash='quran';show('quran');return}
   if(t==='honor'){renderHonor();location.hash='honor';show('honor')}else{renderLearn();location.hash='learn';show('learn')}});
  $('bk-x').onclick=()=>{$('bk').hidden=true};
