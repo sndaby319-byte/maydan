@@ -1113,7 +1113,7 @@ body.has-dash header .hud,body.has-dash header .xpbar,body.has-dash #home>.tools
 .dk-th.on::before{content:'';position:absolute;top:-9px;left:50%;margin-left:-7px;border:7px solid transparent;border-bottom-color:#F2C14E}
 .dk-th u{position:absolute;left:10%;right:10%;bottom:8px;height:4px;border-radius:4px;background:rgba(255,255,255,.25);overflow:hidden}.dk-th u::after{content:'';position:absolute;inset:0;background:#fff;transform-origin:right;animation:dkBar 6s linear both}
 @keyframes dkBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}@keyframes dkFade{from{opacity:.3}to{opacity:1}}
-.dk-sec{position:relative;padding:26px 14px 22px;margin-top:-14px;border-radius:30px 30px 0 0;box-shadow:0 -10px 24px -18px rgba(0,0,0,.6)}
+.dk-sec{position:relative;width:100%;box-sizing:border-box;align-self:stretch;padding:26px 14px 22px;margin-top:-14px;border-radius:30px 30px 0 0;box-shadow:0 -10px 24px -18px rgba(0,0,0,.6)}
 .dk-sec.g{background:linear-gradient(180deg,#123528,#0E1F1D)}.dk-sec.r{background:linear-gradient(180deg,#3A1626,#1B1022)}.dk-sec.y{background:linear-gradient(180deg,#3A2C10,#1C1609)}.dk-sec.b{background:linear-gradient(180deg,#172A5C,#0E1530)}
 .dk-sh{display:flex;gap:12px;align-items:flex-start;margin:0 4px 14px}
 .dk-sh i{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.9);color:var(--sc)}.dk-sh i svg{width:26px;height:26px}
@@ -1150,7 +1150,7 @@ body.has-dash:not(.inpanel) .snd{background:rgba(255,255,255,.06)!important;colo
 body.has-dash:not(.inpanel) .note{color:rgba(240,238,233,.5)!important}
 body.has-dash:not(.inpanel) #dash{border-radius:0!important;box-shadow:none!important;margin-inline:calc(50% - 50vw)!important;margin-top:4px!important}
 body.has-dash:not(.inpanel) .dk-nav{padding-inline:max(14px,env(safe-area-inset-left,0px))}
-@media (min-width:700px){body.has-dash:not(.inpanel) #dash>*{max-width:900px;margin-inline:auto}body.has-dash:not(.inpanel) .dk-sec{max-width:none}body.has-dash:not(.inpanel) .dk-sec>*{max-width:880px;margin-inline:auto}}
+@media (min-width:700px){body.has-dash:not(.inpanel) #dash>*{max-width:900px;margin-inline:auto}body.has-dash:not(.inpanel) #dash>.dk-sec{max-width:none;width:100%}body.has-dash:not(.inpanel) .dk-sec>*{max-width:880px;margin-inline:auto}}
 
 /* ===== المظهر الليلي (الأساسي): كحلي وذهبي في كل الصفحات */
 [data-skin="marah"][data-night]{--bg:#0E1226;--paper:#161B36;--ink:#F0EEE9;--muted:#A3A8C3;--line:#2A3354;
